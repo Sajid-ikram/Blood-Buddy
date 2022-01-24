@@ -31,13 +31,15 @@ Padding customTextField(TextEditingController controller, String text,
             return "Enter a number";
           } else if (value.length != 14) {
             return "Number must be in +880********** format";
+          }else if (!value.startsWith("+880")) {
+            return "Number must start with +880";
           } else {
             return null;
           }
         } else {
           if (value == null || value.isEmpty) {
             snackBar(context, "All fields are required!");
-            return "show error";
+            return "This field is required";
           }
         }
       },

@@ -1,6 +1,7 @@
 import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/authentication.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_button.dart';
+import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_drop_down.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_text_field.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/snackbar.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/top.dart';
@@ -22,7 +23,6 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController numberController = TextEditingController();
-  TextEditingController bloodGroupController = TextEditingController();
 
   bool isTeacher = false;
 
@@ -34,7 +34,6 @@ class _SignUpState extends State<SignUp> {
     emailController.clear();
     passwordController.clear();
     numberController.clear();
-    bloodGroupController.clear();
     super.dispose();
   }
 
@@ -48,12 +47,13 @@ class _SignUpState extends State<SignUp> {
           email: emailController.text,
           password: passwordController.text,
           context: context,
-          bloodGroup: bloodGroupController.text,
           number: nameController.text,
         )
             .then((value) async {
           if (value != "Success") {
-            snackBar(context, value);
+
+            print("dagggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+
           } else {
             final User? user = FirebaseAuth.instance.currentUser;
             if (user != null) {
@@ -61,7 +61,9 @@ class _SignUpState extends State<SignUp> {
             }
           }
         });
-      } catch (e) {}
+      } catch (e) {
+        print("dagggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg********************");
+      }
     }
   }
 
@@ -101,15 +103,20 @@ class _SignUpState extends State<SignUp> {
                               passwordController, "Password", false, context),
                           customTextField(
                               numberController, "Number", false, context),
-                          customTextField(bloodGroupController, "Blood Group",
-                              false, context),
+
+                          const CustomDropDown(),
                         ],
                       ),
                     ),
                     SizedBox(height: 10.h),
                     InkWell(
                       onTap: () {
-                        validate();
+                        if(Provider.of<Authentication>(context,listen: false).dropdownValue.length > 4){
+                          snackBar(context, "Select a blood group");
+                        }else{
+                          validate();
+                        }
+
                       },
                       child: buildButton("Sign Up", 350, 20, 56),
                     ),
@@ -126,4 +133,9 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
 }
+
+
+
+

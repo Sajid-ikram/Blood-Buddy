@@ -1,11 +1,18 @@
+import 'package:blood_buddy/view/sign_in_sign_up/widgets/snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class Authentication with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  String dropdownValue = 'Blood Group (None)';
 
   Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();
+
+  void changeBloodGroup(String text) {
+    dropdownValue = text;
+    notifyListeners();
+  }
 
   Future<String> signIn(
       String email, String password, BuildContext context) async {
@@ -44,7 +51,6 @@ class Authentication with ChangeNotifier {
     required String email,
     required String password,
     required String number,
-    required String bloodGroup,
     required BuildContext context,
   }) async {
     try {
@@ -53,7 +59,26 @@ class Authentication with ChangeNotifier {
         email: email,
         password: password,
       )
-          .then(
+          .catchError((e) {
+        Navigator.of(context, rootNavigator: true).pop();
+
+        switch (e.code) {
+          case "weak-password":
+            snackBar(context, "Your password is too weak");
+            break;
+
+          case "invalid-email":
+            snackBar(context, "Your email is invalid");
+            break;
+          case "email-already-in-use":
+            snackBar(context, "Email is already in use on different account");
+            break;
+          default:
+            snackBar(context, "An undefined Error happened.");
+            break;
+        }
+        throw Exception('Some arbitrary error');
+      }).then(
         (value) {
           notifyListeners();
           Navigator.of(context, rootNavigator: true).pop();
@@ -66,7 +91,7 @@ class Authentication with ChangeNotifier {
               "name": name,
               "email": value.user!.email,
               "number": number,
-              "bloodGroup": bloodGroup,
+              "bloodGroup": dropdownValue,
               "url": "",
             },
           );
@@ -75,22 +100,8 @@ class Authentication with ChangeNotifier {
       );
 
       return "Success";
-    } on FirebaseAuthException catch (e) {
-      Navigator.of(context, rootNavigator: true).pop();
-      switch (e.code) {
-        case "weak-password":
-          return "Your password is too weak";
-
-        case "invalid-email":
-          return "Your email is invalid";
-
-        case "email-already-in-use":
-          return "Email is already in use on different account";
-
-        default:
-          return "An undefined Error happened.";
-      }
     } catch (e) {
+      print("----------------------------------11");
       Navigator.of(context, rootNavigator: true).pop();
       return "An Error occur";
     }
