@@ -40,19 +40,17 @@ class _SignUpState extends State<SignUp> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       try {
-        buildShowDialog(context);
+        buildLoadingScreen(context);
         Provider.of<Authentication>(context, listen: false)
             .signUp(
           name: nameController.text,
           email: emailController.text,
           password: passwordController.text,
           context: context,
-          number: nameController.text,
+          number: numberController.text,
         )
             .then((value) async {
           if (value != "Success") {
-
-            print("dagggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
 
           } else {
             final User? user = FirebaseAuth.instance.currentUser;

@@ -24,7 +24,7 @@ Widget top(BuildContext context,String page){
   );
 }
 
-buildShowDialog(BuildContext context) {
+buildLoadingScreen(BuildContext context) {
   return showDialog(
     context: context,
     barrierDismissible: false,

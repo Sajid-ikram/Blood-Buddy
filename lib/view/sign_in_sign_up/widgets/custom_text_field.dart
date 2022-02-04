@@ -13,9 +13,7 @@ Padding customTextField(TextEditingController controller, String text,
         if (text == "Email Address") {
           if (value == null || value.isEmpty) {
             return "Enter an email";
-          } else if (!value.contains('.com')) {
-            return "Enter a valid email";
-          } else {
+          }  else {
             return null;
           }
         } else if (text == "Password") {

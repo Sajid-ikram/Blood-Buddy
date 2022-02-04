@@ -1,5 +1,10 @@
 import 'package:blood_buddy/providers/authentication.dart';
+import 'package:blood_buddy/providers/donor_provider.dart';
+import 'package:blood_buddy/providers/post_provider.dart';
+import 'package:blood_buddy/providers/profile_provider.dart';
+import 'package:blood_buddy/view/Home/add_post.dart';
 import 'package:blood_buddy/view/Home/home.dart';
+import 'package:blood_buddy/view/navigation_bar.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/onboarding.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/sign_in.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/sign_up.dart';
@@ -36,6 +41,9 @@ class MyApp extends StatelessWidget {
           MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => Authentication()),
+              ChangeNotifierProvider(create: (_) => PostProvider()),
+              ChangeNotifierProvider(create: (_) => ProfileProvider()),
+              ChangeNotifierProvider(create: (_) => DonorProvider()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -68,6 +76,7 @@ class MyApp extends StatelessWidget {
                 "SignUp": (ctx) => const SignUp(),
                 "OnBoarding": (ctx) => const OnBoarding(),
                 "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
+                "AddNewPostPage": (ctx) => const AddNewPostPage(),
 
 
               },
@@ -114,7 +123,7 @@ class _MiddleOfHomeAndSignInState extends State<MiddleOfHomeAndSignIn> {
           );
         }
         if (snapshot.data != null && snapshot.data!.emailVerified) {
-          return const Home();
+          return const CustomNavigationBar();
         }
         return snapshot.data == null
             ? const OnBoarding()

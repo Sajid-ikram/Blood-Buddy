@@ -1,4 +1,5 @@
 import 'package:blood_buddy/constant/constant.dart';
+import 'package:blood_buddy/main.dart';
 import 'package:blood_buddy/providers/authentication.dart';
 import 'package:blood_buddy/view/Home/home.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_button.dart';
@@ -86,7 +87,7 @@ class _VerificationAndHomeScreenState extends State<VerificationAndHomeScreen> {
             ),
           )
         : isVerified
-            ? const Home()
+            ? const MiddleOfHomeAndSignIn()
             : _buildScaffold();
   }
 
