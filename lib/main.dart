@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'LU CSE Community',
+              title: 'Blood Buddy',
               theme: ThemeData(
 
                 primarySwatch: Colors.teal,
