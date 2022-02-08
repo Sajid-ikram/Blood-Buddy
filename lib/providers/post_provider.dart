@@ -32,8 +32,6 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-
-
   searchPost(String text){
     searchText = text;
     notifyListeners();

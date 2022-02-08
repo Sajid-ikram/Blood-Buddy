@@ -17,7 +17,7 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  int pageIndex = 3;
+  int pageIndex = 0;
   List<Widget> pages = [
     const Home(),
     const Donor(),

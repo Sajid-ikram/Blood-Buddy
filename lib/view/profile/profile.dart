@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -22,60 +23,68 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var pro = Provider.of<ProfileProvider>(context, listen: false);
-    return Scaffold(
-      //appBar: customAppBar("Profile",context),
-      body: Stack(
-        children: [
-          ListView(
-            padding: EdgeInsets.zero,
-            physics: const BouncingScrollPhysics(),
+
+    return Consumer<ProfileProvider>(
+      builder: (context, provider, child) {
+        return Scaffold(
+          body: Stack(
             children: [
-              Container(
-                height: size.height * 0.28,
-                width: double.infinity,
-                color: Colors.grey,
+              ListView(
+                padding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  Container(
+                    height: size.height * 0.28,
+                    width: double.infinity,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  buildText("Name", provider.name),
+                  buildText("Blood Group", provider.bloodGroup),
+                  buildText("Email", provider.email),
+                  buildText("Number", provider.number),
+                  buildLogout("Edit Profile", Icons.edit, provider),
+                  buildLogout("LogOut", Icons.logout, provider),
+                ],
               ),
-              const SizedBox(
-                height: 100,
-              ),
-              buildText("Name", pro.name),
-              buildText("Blood Group", pro.bloodGroup),
-              buildText("Email", pro.email),
-              buildText("Number", pro.number),
-              buildLogout(),
+              ProfilePicture(name: provider.name)
             ],
           ),
-          ProfilePicture(name: pro.name)
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget buildLogout() {
+  Widget buildLogout(String name, IconData iconData, ProfileProvider pro) {
     return GestureDetector(
       onTap: () {
-        Provider.of<Authentication>(context, listen: false).signOut();
+        if (name == "LogOut") {
+          Provider.of<Authentication>(context, listen: false).signOut();
+        } else {
+          Navigator.of(context).pushNamed("EditProfile");
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25.w),
         decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(10)),
+            color: Colors.grey.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(6)),
         height: 50,
         child: Row(
           children: [
             SizedBox(width: 20.w),
-            const Text(
-              "LogOut",
-              style: TextStyle(
+            Text(
+              name,
+              style: const TextStyle(
                 color: appSecondaryColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const Spacer(),
-            const Icon(Icons.logout),
+            Icon(iconData),
             SizedBox(width: 20.w),
           ],
         ),
@@ -87,8 +96,8 @@ class _ProfileState extends State<Profile> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 25.w),
       decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(10)),
+          color: Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(6)),
       height: 50,
       child: Row(
         children: [

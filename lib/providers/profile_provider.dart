@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:blood_buddy/providers/authentication.dart';
 import 'package:blood_buddy/view/public_widgets/on_error.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/top.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
+import 'package:provider/provider.dart';
 
 class ProfileProvider extends ChangeNotifier {
   String url = '';
@@ -30,32 +32,28 @@ class ProfileProvider extends ChangeNotifier {
   Future<DocumentSnapshot> getProfileInfoByUID(String uid) async {
     return await FirebaseFirestore.instance.collection('users').doc(uid).get();
   }
-/*
+
   Future updateProfileInfo({
     required String name,
-    required String batch,
-    required String section,
-    required String bio,
+    required String number,
     required BuildContext context,
   }) async {
     try {
-      FirebaseFirestore.instance.collection("users").doc(currentUserUid).update(
+      FirebaseFirestore.instance.collection("users").doc(uid).update(
         {
           "name": name,
-          "batch": batch,
-          "section": section,
-          "bio": bio,
+          "number": number,
+          "bloodGroup": Provider.of<Authentication>(context,listen: false).dropdownValue,
         },
       );
-      profileName = name;
-      this.section = section;
-      this.batch = batch;
-      this.bio = bio;
+      this.name = name;
+      this.number = number;
+      bloodGroup = Provider.of<Authentication>(context,listen: false).dropdownValue;
       notifyListeners();
     } catch (e) {
-      return onError(context, "Having problem connecting to the server");
+      return onError(context, "Something went wrong");
     }
-  }*/
+  }
 
   Future updateProfileUrl(File _imageFile, BuildContext context) async {
     try {

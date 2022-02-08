@@ -80,8 +80,8 @@ class _HomeState extends State<Home> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 25.w, vertical: 10),
                             decoration: BoxDecoration(
-                              color: const Color(0xffF9F9F9),
-                              borderRadius: BorderRadius.circular(10),
+
+                              border: Border.all(color: Color(0xffE3E3E3))
                             ),
                             child: TextField(
                               onChanged: (value) {
@@ -115,10 +115,9 @@ class _HomeState extends State<Home> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 15.h, horizontal: 21.w),
                             decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.2),
-                              borderRadius: BorderRadius.circular(10),
+
                               border: Border.all(
-                                  color: const Color(0xffE3E3E3), width: 1),
+                                  color: const Color(0xffE3E3E3), width: 1.7),
                             ),
                             child: Column(
                               children: [

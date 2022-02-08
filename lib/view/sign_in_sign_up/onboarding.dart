@@ -21,21 +21,28 @@ class OnBoarding extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 100.h),
                 SizedBox(
-                  height: 120.h,
+                  height: 330.h,
+                  width: double.infinity,
+                  child: Center(
+                      child: Image.asset(
+                    "assets/BloodBuddy.png",
+                    fit: BoxFit.fill,
+                  )),
+                ),
+                /*SizedBox(
+                  height: 60.h,
                   width: double.infinity,
                   child: Center(
                     child: Text(
                       "Blood Buddy",
                       style: TextStyle(
                           fontSize: 50.sp,
-                          color:  appMainColor,
+                          color: appMainColor,
                           fontWeight: FontWeight.w900),
                     ),
                   ),
-                ),
-
+                ),*/
                 SizedBox(height: 40.h),
                 InkWell(
                   onTap: () {
@@ -50,7 +57,7 @@ class OnBoarding extends StatelessWidget {
                   },
                   child: buildOutlineButton("Sign In"),
                 ),
-                SizedBox(height: 180.h),
+                SizedBox(height: 80.h),
               ],
             ),
           ),

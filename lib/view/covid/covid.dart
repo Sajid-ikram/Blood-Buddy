@@ -1,6 +1,6 @@
-import 'package:blood_buddy/providers/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Covid extends StatelessWidget {
   const Covid({Key? key}) : super(key: key);
@@ -8,14 +8,17 @@ class Covid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Covid"),
-            Icon(Icons.logout),
-          ],
-        ),
+      body: Column(
+        children: [
+          SizedBox(height: 40.h),
+          const Expanded(
+            child: WebView(
+              initialUrl:
+                  'https://covid19.who.int',
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
+          ),
+        ],
       ),
     );
   }
