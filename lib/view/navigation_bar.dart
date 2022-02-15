@@ -1,9 +1,11 @@
 import 'package:blood_buddy/constant/constant.dart';
+import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/view/profile/profile.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'Home/home.dart';
 import 'covid/covid.dart';
@@ -46,6 +48,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           if(index == pageIndex){
             return;
           }
+          Provider.of<DonorProvider>(context,listen: false).searchUser("");
           setState(() {
             pageIndex = index;
           });

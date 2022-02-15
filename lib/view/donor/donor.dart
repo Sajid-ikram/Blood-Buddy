@@ -37,15 +37,9 @@ class _DonorState extends State<Donor> {
           return Consumer<DonorProvider>(
             builder: (context, provider, child) {
               return ListView.builder(
-
                 padding: EdgeInsets.zero,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-
-
-
-
-
                   if (index == 0) {
                     return Container(
                       height: 48.h,
@@ -77,20 +71,20 @@ class _DonorState extends State<Donor> {
                     );
                   }
 
-
                   bool isBeforeNinety = true;
 
-                  if(data?.docs[index - 1]["lastDonate"] != ""){
-                    DateTime conDate = DateTime.parse(data?.docs[index - 1]["lastDonate"]).toLocal();
-                    DateTime ninetyDays = DateTime.now().subtract(const Duration(days: 90));
+                  if (data?.docs[index - 1]["lastDonate"] != "") {
+                    DateTime conDate =
+                        DateTime.parse(data?.docs[index - 1]["lastDonate"])
+                            .toLocal();
+                    DateTime ninetyDays =
+                        DateTime.now().subtract(const Duration(days: 90));
                     isBeforeNinety = conDate.isBefore(ninetyDays);
-
                   }
 
-
-                  if ((data?.docs[index - 1]["bloodGroup"]
-                      .toLowerCase()
-                      .contains(provider.searchUserText.toLowerCase()) && isBeforeNinety)) {
+                  if ( provider.searchUserText.isEmpty || ( data?.docs[index - 1]["bloodGroup"].toLowerCase() ==
+                          provider.searchUserText.toLowerCase() &&
+                      isBeforeNinety)) {
                     return Column(
                       children: [
                         Container(
