@@ -4,15 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class PostProvider with ChangeNotifier {
-
   String searchText = "";
-
 
   Future addNewPost({
     required String userName,
     required String profileUrl,
     required String postText,
-
     required String dateTime,
     required BuildContext context,
   }) async {
@@ -32,12 +29,12 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-  searchPost(String text){
+  searchPost(String text) {
     searchText = text;
     notifyListeners();
   }
 
-
-
-
+  Future deletePost(String id) async {
+    await FirebaseFirestore.instance.collection("posts").doc(id).delete();
+  }
 }

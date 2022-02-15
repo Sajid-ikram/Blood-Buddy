@@ -3,6 +3,7 @@ import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
+import 'package:blood_buddy/view/Home/widgets/user_info.dart';
 import 'package:blood_buddy/view/public_widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,6 +43,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<ProfileProvider>(context);
     return Scaffold(
       appBar: customAppBar("Home", context),
       body: Stack(
@@ -80,9 +82,7 @@ class _HomeState extends State<Home> {
                             margin: EdgeInsets.symmetric(
                                 horizontal: 25.w, vertical: 10),
                             decoration: BoxDecoration(
-
-                              border: Border.all(color: Color(0xffE3E3E3))
-                            ),
+                                border: Border.all(color: Color(0xffE3E3E3))),
                             child: TextField(
                               onChanged: (value) {
                                 provider.searchPost(value);
@@ -115,7 +115,6 @@ class _HomeState extends State<Home> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 15.h, horizontal: 21.w),
                             decoration: BoxDecoration(
-
                               border: Border.all(
                                   color: const Color(0xffE3E3E3), width: 1.7),
                             ),
@@ -124,16 +123,7 @@ class _HomeState extends State<Home> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    returnImage(
-                                        data?.docs[index - 1]["profileUrl"]),
-                                    SizedBox(width: 15.w),
-                                    Text(
-                                      data?.docs[index - 1]["userName"],
-                                      style: TextStyle(
-                                          fontSize: 17.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black),
-                                    ),
+                                    UserProfileInfo(uid: data?.docs[index - 1]["ownerUid"]),
                                     SizedBox(width: 15.w),
                                     Text(
                                       daysBetween(
@@ -145,7 +135,20 @@ class _HomeState extends State<Home> {
                                         fontSize: 13.sp,
                                         fontWeight: FontWeight.w400,
                                       ),
-                                    )
+                                    ),
+                                    const Spacer(),
+                                    if (pro.uid ==
+                                        data?.docs[index - 1]["ownerUid"])
+                                      IconButton(
+                                        onPressed: () {
+                                          provider.deletePost(
+                                              data?.docs[index - 1].id ?? "");
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          size: 22.sp,
+                                        ),
+                                      )
                                   ],
                                 ),
                                 const Divider(
@@ -156,8 +159,8 @@ class _HomeState extends State<Home> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     data?.docs[index - 1]["postText"],
-                                    style: TextStyle(
-                                        fontSize: 15.sp, height: 1.4),
+                                    style:
+                                        TextStyle(fontSize: 15.sp, height: 1.4),
                                   ),
                                 ),
                               ],
@@ -179,18 +182,3 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget returnImage(String url) {
-  return url != ""
-      ? CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 21.sp,
-          backgroundImage: NetworkImage(
-            url,
-          ),
-        )
-      : CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 21.sp,
-          backgroundImage: const AssetImage("assets/profile.png"),
-        );
-}

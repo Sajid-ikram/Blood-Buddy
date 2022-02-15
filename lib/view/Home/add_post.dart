@@ -39,33 +39,72 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Add A Request",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        leading: Padding(
+          padding:  EdgeInsets.only(left: 20.w),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(
+              Icons.close,
+              size: 30.sp,
+            ),
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(32, 30, 32, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 60.h),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(
-                  Icons.close,
-                  size: 30.sp,
-                ),
-              ),
-              SizedBox(height: 20.h),
+
+
+              SizedBox(height: 10.h),
               TextField(
                 maxLines: 12,
                 style: const TextStyle(color: Colors.black),
+
                 controller: postController,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Write something for ",
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
+                decoration: InputDecoration(
+                  errorStyle: const TextStyle(fontSize: 13),
+                  contentPadding: EdgeInsets.all(15.sp),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      )),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                      )),
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.red,
+                      )),
+                  focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Colors.grey,
+                      )),
+                  hintText: "Write something",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 20.sp),
+                )
               ),
+              SizedBox(height: 20.h),
               InkWell(
                   onTap: () {
                     uploadPost();

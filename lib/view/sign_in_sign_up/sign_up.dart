@@ -121,6 +121,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 15.h),
                     switchPageButton(
                         "Already have an account? - ", "Sign In", context),
+
                   ],
                 ),
               ),

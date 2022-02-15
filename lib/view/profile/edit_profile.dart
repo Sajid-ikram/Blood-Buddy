@@ -3,9 +3,10 @@ import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_button.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_drop_down.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/top.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   late TextEditingController changeNameController;
   late TextEditingController numberController;
+  DateTime? _dateTime;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -25,8 +27,6 @@ class _EditProfileState extends State<EditProfile> {
     var pro = Provider.of<ProfileProvider>(context, listen: false);
     changeNameController = TextEditingController(text: pro.name);
     numberController = TextEditingController(text: pro.number);
-
-
     super.initState();
   }
 
@@ -39,6 +39,7 @@ class _EditProfileState extends State<EditProfile> {
           name: changeNameController.text,
           number: numberController.text,
           context: context,
+          dateTime: _dateTime == null ? "" : _dateTime.toString(),
         )
             .then(
           (value) async {
@@ -98,6 +99,37 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 5.h),
               const CustomDropDown(),
+              SizedBox(height: 15.h),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {
+                    DatePicker.showDatePicker(
+                      context,
+                      showTitleActions: true,
+
+                      minTime: DateTime(2018, 3, 5),
+                      maxTime: DateTime.now(),
+                      onConfirm: (date) {
+                        setState(() {
+                          _dateTime = date;
+                        });
+                      },
+                      currentTime: DateTime.now(),
+
+                    );
+                  },
+                  child: Text(
+                    _dateTime == null
+                        ? "Select Last Donate Date"
+                        : _changeTime(_dateTime!),
+                    style: TextStyle(
+                        color: const Color(0xff6a6a6a),
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
               const Spacer(),
               GestureDetector(
                 onTap: () {
@@ -185,4 +217,11 @@ Container _buildContainer(
       ],
     ),
   );
+}
+
+String _changeTime(DateTime dt) {
+  var dateFormat = DateFormat("dd-MM-yyyy");
+  var utcDate = dateFormat.format(DateTime.parse(dt.toString()));
+  var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+  return dateFormat.format(DateTime.parse(localDate));
 }

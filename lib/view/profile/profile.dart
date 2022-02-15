@@ -2,13 +2,12 @@ import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/authentication.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/profile/widgets/profile_image.dart';
-import 'package:blood_buddy/view/public_widgets/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -27,34 +26,52 @@ class _ProfileState extends State<Profile> {
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         return Scaffold(
-          body: Stack(
-            children: [
-              ListView(
-                padding: EdgeInsets.zero,
-                physics: const BouncingScrollPhysics(),
+          body: SingleChildScrollView(
+            child: SizedBox(
+              width: 414,
+              height: 837,
+              child: Stack(
                 children: [
-                  Container(
-                    height: size.height * 0.28,
-                    width: double.infinity,
-                    color: Colors.grey,
+                  ListView(
+                    padding: EdgeInsets.zero,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      Container(
+                        height: size.height * 0.28,
+                        width: double.infinity,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      buildText("Name", provider.name),
+                      buildText("Blood Group", provider.bloodGroup),
+                      buildText("Email", provider.email),
+                      buildText("Number", provider.number),
+                      buildText(
+                          "Last Donate date",
+                          provider.lastDonate.isNotEmpty
+                              ? _changeTime(provider.lastDonate)
+                              : "Not provided"),
+                      buildLogout("Edit Profile", Icons.edit, provider),
+                      buildLogout("LogOut", Icons.logout, provider),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 100,
-                  ),
-                  buildText("Name", provider.name),
-                  buildText("Blood Group", provider.bloodGroup),
-                  buildText("Email", provider.email),
-                  buildText("Number", provider.number),
-                  buildLogout("Edit Profile", Icons.edit, provider),
-                  buildLogout("LogOut", Icons.logout, provider),
+                  ProfilePicture(name: provider.name)
                 ],
               ),
-              ProfilePicture(name: provider.name)
-            ],
+            ),
           ),
         );
       },
     );
+  }
+
+  String _changeTime(String dt) {
+    var dateFormat = DateFormat("dd-MM-yyyy");
+    var utcDate = dateFormat.format(DateTime.parse(dt));
+    var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+    return dateFormat.format(DateTime.parse(localDate));
   }
 
   Widget buildLogout(String name, IconData iconData, ProfileProvider pro) {
@@ -110,9 +127,7 @@ class _ProfileState extends State<Profile> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
-            height: 20.h,
-            width: 210.w,
+          Expanded(
             child: Text(
               text2,
               overflow: TextOverflow.ellipsis,

@@ -9,40 +9,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class ForgotPass extends StatefulWidget {
+  const ForgotPass({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<ForgotPass> createState() => _ForgotPassState();
 }
 
-class _SignInState extends State<SignIn> {
+class _ForgotPassState extends State<ForgotPass> {
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     emailController.clear();
-    passwordController.clear();
     super.dispose();
   }
-
 
   validate() async {
     if (_formKey.currentState!.validate()) {
       try {
         buildLoadingScreen(context);
         Provider.of<Authentication>(context, listen: false)
-            .signIn(emailController.text, passwordController.text, context)
+            .resetPassword(emailController.text, context)
             .then(
-              (value) {
-            if (value != "Success") {
-              snackBar(context, value);
+          (value) {
+            if (value == "Success") {
+              snackBar(context, "A link has been send to your email");
+            } else {
+              snackBar(context, "An error accor");
             }
           },
         );
-      } catch (e) {}
+      } catch (e) {
+        snackBar(context, "An error accor");
+      }
     }
   }
 
@@ -61,7 +62,7 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Let's Sign In",
+                      "Enter Your Email",
                       style: TextStyle(
                         fontSize: 35.sp,
                         color: appMainColor,
@@ -76,9 +77,6 @@ class _SignInState extends State<SignIn> {
                         children: [
                           customTextField(
                               emailController, "Email Address", false, context),
-                          customTextField(
-                              passwordController, "Password", true,
-                              context)
                         ],
                       ),
                     ),
@@ -87,26 +85,7 @@ class _SignInState extends State<SignIn> {
                       onTap: () {
                         validate();
                       },
-                      child: buildButton("Sign In", 350, 20, 56),
-                    ),
-                    SizedBox(height: 15.h),
-                    switchPageButton(
-                        "Don’t have an account? - ", "Sign Up", context),
-                    SizedBox(height: 10.h),
-                    InkWell(
-                      onTap: (){
-                        Navigator.of(context).pushNamed("ForgotPass");
-                      },
-                      child: Text(
-                        "Forgot password",
-
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          color: Colors.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w500
-                        ),
-
-                      ),
+                      child: buildButton("Send", 350, 20, 56),
                     ),
                   ],
                 ),

@@ -16,6 +16,7 @@ class ProfileProvider extends ChangeNotifier {
   String bloodGroup = '';
   String number = '';
   String uid = '';
+  String lastDonate = '';
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -25,6 +26,7 @@ class ProfileProvider extends ChangeNotifier {
     email = userInfo["email"];
     bloodGroup = userInfo["bloodGroup"];
     number = userInfo["number"];
+    lastDonate = userInfo["lastDonate"];
     uid = id;
     notifyListeners();
   }
@@ -36,6 +38,7 @@ class ProfileProvider extends ChangeNotifier {
   Future updateProfileInfo({
     required String name,
     required String number,
+    required String dateTime,
     required BuildContext context,
   }) async {
     try {
@@ -43,12 +46,15 @@ class ProfileProvider extends ChangeNotifier {
         {
           "name": name,
           "number": number,
-          "bloodGroup": Provider.of<Authentication>(context,listen: false).dropdownValue,
+          "bloodGroup":
+              Provider.of<Authentication>(context, listen: false).dropdownValue,
+          "lastDonate": dateTime,
         },
       );
       this.name = name;
       this.number = number;
-      bloodGroup = Provider.of<Authentication>(context,listen: false).dropdownValue;
+      bloodGroup =
+          Provider.of<Authentication>(context, listen: false).dropdownValue;
       notifyListeners();
     } catch (e) {
       return onError(context, "Something went wrong");
@@ -90,4 +96,7 @@ class ProfileProvider extends ChangeNotifier {
       return onError(context, "Having problem connecting to the server");
     }
   }
+
+
+
 }

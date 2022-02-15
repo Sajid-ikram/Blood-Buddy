@@ -13,7 +13,7 @@ Padding customTextField(TextEditingController controller, String text,
         if (text == "Email Address") {
           if (value == null || value.isEmpty) {
             return "Enter an email";
-          }  else {
+          } else {
             return null;
           }
         } else if (text == "Password") {
@@ -21,6 +21,8 @@ Padding customTextField(TextEditingController controller, String text,
             return "Enter a Password";
           } else if (value.length < 6) {
             return "Password must be greater than 6 digit";
+          } else if (!isPasswordCompliant(value)) {
+            return "Must contain at least one spacial character,Upper case, lowercase and number";
           } else {
             return null;
           }
@@ -29,7 +31,7 @@ Padding customTextField(TextEditingController controller, String text,
             return "Enter a number";
           } else if (value.length != 14) {
             return "Number must be in +880********** format";
-          }else if (!value.startsWith("+880")) {
+          } else if (!value.startsWith("+880")) {
             return "Number must start with +880";
           } else {
             return null;
@@ -73,4 +75,29 @@ Padding customTextField(TextEditingController controller, String text,
       ),
     ),
   );
+}
+
+bool isPasswordCompliant(String password, [int minLength = 6]) {
+  if (password == null || password.isEmpty) {
+    return false;
+  }
+
+  bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
+  bool hasDigits = password.contains(RegExp(r'[0-9]'));
+  bool hasLowercase = password.contains(RegExp(r'[a-z]'));
+  bool hasSpecialCharacters =
+      password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+  bool hasMinLength = password.length >= minLength;
+
+  print(hasDigits &
+      hasUppercase &
+      hasLowercase &
+      hasSpecialCharacters &
+      hasMinLength);
+
+  return hasDigits &
+      hasUppercase &
+      hasLowercase &
+      hasSpecialCharacters &
+      hasMinLength;
 }
