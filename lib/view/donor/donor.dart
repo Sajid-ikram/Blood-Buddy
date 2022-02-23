@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Donor extends StatefulWidget {
   const Donor({Key? key}) : super(key: key);
@@ -82,9 +83,10 @@ class _DonorState extends State<Donor> {
                     isBeforeNinety = conDate.isBefore(ninetyDays);
                   }
 
-                  if ( provider.searchUserText.isEmpty || ( data?.docs[index - 1]["bloodGroup"].toLowerCase() ==
-                          provider.searchUserText.toLowerCase() &&
-                      isBeforeNinety)) {
+                  if (provider.searchUserText.isEmpty ||
+                      (data?.docs[index - 1]["bloodGroup"].toLowerCase() ==
+                              provider.searchUserText.toLowerCase() &&
+                          isBeforeNinety)) {
                     return Column(
                       children: [
                         Container(
@@ -182,17 +184,27 @@ class _DonorState extends State<Donor> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(
-          height: 20.h,
-          width: 170.w,
-          child: Text(
-            text2,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: const Color(0xff6a6a6a),
-              fontWeight: FontWeight.w400,
+        SizedBox(height: 2.h),
+        GestureDetector(
+          onTap: () {
+            if (text1 == "Number :") {
+              launch("tel://$text2");
+            }
+          },
+          child: SizedBox(
+            height: 20.h,
+            width: 170.w,
+            child: Text(
+              text2,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(
+                decoration:
+                    text1 == "Number :" ? TextDecoration.underline : null,
+                fontSize: 14.sp,
+                color: const Color(0xff6a6a6a),
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ),
