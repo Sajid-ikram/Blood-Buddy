@@ -18,6 +18,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   late TextEditingController changeNameController;
   late TextEditingController numberController;
+  late TextEditingController locationController;
   DateTime? _dateTime;
 
   final _formKey = GlobalKey<FormState>();
@@ -27,6 +28,7 @@ class _EditProfileState extends State<EditProfile> {
     var pro = Provider.of<ProfileProvider>(context, listen: false);
     changeNameController = TextEditingController(text: pro.name);
     numberController = TextEditingController(text: pro.number);
+    locationController = TextEditingController(text: pro.location);
     super.initState();
   }
 
@@ -38,6 +40,7 @@ class _EditProfileState extends State<EditProfile> {
             .updateProfileInfo(
           name: changeNameController.text,
           number: numberController.text,
+          location: locationController.text,
           context: context,
           dateTime: _dateTime == null ? "" : _dateTime.toString(),
         )
@@ -83,6 +86,8 @@ class _EditProfileState extends State<EditProfile> {
                     _buildContainer(
                         "Change name", changeNameController, context),
                     _buildContainer("Change Number", numberController, context),
+                    _buildContainer(
+                        "Change Location", locationController, context),
                   ],
                 ),
               ),
@@ -107,7 +112,6 @@ class _EditProfileState extends State<EditProfile> {
                     DatePicker.showDatePicker(
                       context,
                       showTitleActions: true,
-
                       minTime: DateTime(2018, 3, 5),
                       maxTime: DateTime.now(),
                       onConfirm: (date) {
@@ -116,7 +120,6 @@ class _EditProfileState extends State<EditProfile> {
                         });
                       },
                       currentTime: DateTime.now(),
-
                     );
                   },
                   child: Text(

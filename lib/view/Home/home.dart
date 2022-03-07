@@ -1,13 +1,10 @@
-import 'dart:ui';
 import 'package:blood_buddy/constant/constant.dart';
-import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/Home/widgets/user_info.dart';
 import 'package:blood_buddy/view/public_widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -50,28 +47,28 @@ class _HomeState extends State<Home> {
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("posts")
-                  .orderBy('dateTime', descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Center(child: Text("Something went wrong"));
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+            child: Consumer<PostProvider>(
+              builder: (context, provider, child) {
+                return StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("posts")
+                      .orderBy('dateTime', descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text("Something went wrong"));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-                final data = snapshot.data;
-                if (data != null) {
-                  size = data.size;
-                }
+                    final data = snapshot.data;
+                    if (data != null) {
+                      size = data.size;
+                    }
 
-                return Consumer<PostProvider>(
-                  builder: (context, provider, child) {
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -123,7 +120,8 @@ class _HomeState extends State<Home> {
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    UserProfileInfo(uid: data?.docs[index - 1]["ownerUid"]),
+                                    UserProfileInfo(
+                                        uid: data?.docs[index - 1]["ownerUid"]),
                                     SizedBox(width: 15.w),
                                     Text(
                                       daysBetween(
@@ -181,4 +179,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-

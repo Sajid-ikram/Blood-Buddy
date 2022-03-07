@@ -17,6 +17,7 @@ class ProfileProvider extends ChangeNotifier {
   String number = '';
   String uid = '';
   String lastDonate = '';
+  String location = '';
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -27,6 +28,7 @@ class ProfileProvider extends ChangeNotifier {
     bloodGroup = userInfo["bloodGroup"];
     number = userInfo["number"];
     lastDonate = userInfo["lastDonate"];
+    location = userInfo["location"];
     uid = id;
     notifyListeners();
   }
@@ -39,6 +41,7 @@ class ProfileProvider extends ChangeNotifier {
     required String name,
     required String number,
     required String dateTime,
+    required String location,
     required BuildContext context,
   }) async {
     try {
@@ -49,6 +52,7 @@ class ProfileProvider extends ChangeNotifier {
           "bloodGroup":
               Provider.of<Authentication>(context, listen: false).dropdownValue,
           "lastDonate": dateTime,
+          "location": location,
         },
       );
       this.name = name;

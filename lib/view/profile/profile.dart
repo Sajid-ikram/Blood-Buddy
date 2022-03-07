@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
           body: SingleChildScrollView(
             child: SizedBox(
               width: 414,
-              height: 837,
+              height: 850,
               child: Stack(
                 children: [
                   ListView(
@@ -48,6 +48,7 @@ class _ProfileState extends State<Profile> {
                       buildText("Blood Group", provider.bloodGroup),
                       buildText("Email", provider.email),
                       buildText("Number", provider.number),
+                      buildText("Location", provider.location),
                       buildText(
                           "Last Donate date",
                           provider.lastDonate.isNotEmpty

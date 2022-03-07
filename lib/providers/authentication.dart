@@ -94,6 +94,7 @@ class Authentication with ChangeNotifier {
               "bloodGroup": dropdownValue,
               "url": "",
               "lastDonate": "",
+              "location": "",
             },
           );
           Navigator.of(context).pushReplacementNamed("MiddleOfHomeAndSignIn");

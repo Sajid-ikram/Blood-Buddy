@@ -2,9 +2,7 @@ import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/view/public_widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -38,7 +36,7 @@ class _DonorState extends State<Donor> {
           return Consumer<DonorProvider>(
             builder: (context, provider, child) {
               return ListView.builder(
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.only(bottom: 60.h),
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   if (index == 0) {
@@ -48,7 +46,7 @@ class _DonorState extends State<Donor> {
                       margin:
                           EdgeInsets.symmetric(horizontal: 25.w, vertical: 10),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffE3E3E3))),
+                          border: Border.all(color: const Color(0xffE3E3E3))),
                       child: TextField(
                         onChanged: (value) {
                           pro.searchUser(value);
@@ -152,8 +150,12 @@ class _DonorState extends State<Donor> {
                                   buildRow("Number :",
                                       data?.docs[index - 1]["number"]),
                                   SizedBox(height: 5.h),
-                                  buildRow("Email :",
-                                      data?.docs[index - 1]["email"]),
+                                  buildRow(
+                                    "Location :",
+                                    data?.docs[index - 1]["location"] == ""
+                                        ? "Not Available"
+                                        : data?.docs[index - 1]["location"],
+                                  ),
                                 ],
                               )
                             ],
@@ -191,21 +193,33 @@ class _DonorState extends State<Donor> {
               launch("tel://$text2");
             }
           },
-          child: SizedBox(
-            height: 20.h,
-            width: 170.w,
-            child: Text(
-              text2,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: TextStyle(
-                decoration:
-                    text1 == "Number :" ? TextDecoration.underline : null,
-                fontSize: 14.sp,
-                color: const Color(0xff6a6a6a),
-                fontWeight: FontWeight.w400,
+          child: Row(
+            children: [
+              SizedBox(
+                child: Text(
+                  text2,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    decoration:
+                        text1 == "Number :" ? TextDecoration.underline : null,
+                    fontSize: 14.sp,
+                    color: const Color(0xff6a6a6a),
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
-            ),
+              text1 == "Number :"
+                  ? Padding(
+                      padding: EdgeInsets.only(left: 20.w),
+                      child: Icon(
+                        Icons.phone,
+                        color: Colors.green,
+                        size: 18.sp,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           ),
         ),
       ],
