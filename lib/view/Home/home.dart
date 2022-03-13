@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
@@ -155,10 +156,30 @@ class _HomeState extends State<Home> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    data?.docs[index - 1]["postText"],
-                                    style:
-                                        TextStyle(fontSize: 15.sp, height: 1.4),
+                                  child: Column(
+                                    children: [
+                                      buildRow(
+                                          "Type : ",
+                                          data?.docs[index - 1]
+                                              ["requestOrDonate"]),
+                                      SizedBox(height: 5.h),
+                                      buildRow("Blood Group : ",
+                                          data?.docs[index - 1]["bloodGroup"]),
+                                      SizedBox(height: 5.h),
+                                      buildRow("Blood Amount : ",
+                                          data?.docs[index - 1]["bloodAmount"]),
+                                      SizedBox(height: 5.h),
+                                      buildRow(
+                                          "Date : ",
+                                          _changeTime(DateTime.parse(
+                                              data?.docs[index - 1]["date"]))),
+                                      SizedBox(height: 5.h),
+                                      buildRow("Contact : ",
+                                          data?.docs[index - 1]["contact"]),
+                                      SizedBox(height: 5.h),
+                                      buildRow("Place : ",
+                                          data?.docs[index - 1]["place"]),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -178,4 +199,30 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  Row buildRow(String text1, String text2) {
+    return Row(
+      children: [
+        Text(
+          text1,
+          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
+        ),
+        Expanded(
+          child: Text(
+            text2 ,
+            style: TextStyle(
+              fontSize: 15.sp,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+String _changeTime(DateTime dt) {
+  var dateFormat = DateFormat("dd-MM-yyyy");
+  var utcDate = dateFormat.format(DateTime.parse(dt.toString()));
+  var localDate = dateFormat.parse(utcDate, true).toLocal().toString();
+  return dateFormat.format(DateTime.parse(localDate));
 }

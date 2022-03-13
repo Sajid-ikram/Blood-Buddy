@@ -9,7 +9,12 @@ class PostProvider with ChangeNotifier {
   Future addNewPost({
     required String userName,
     required String profileUrl,
-    required String postText,
+    required String requestOrDonate,
+    required String bloodGroup,
+    required String bloodAmount,
+    required String date,
+    required String place,
+    required String contact,
     required String dateTime,
     required BuildContext context,
   }) async {
@@ -17,7 +22,12 @@ class PostProvider with ChangeNotifier {
       FirebaseFirestore.instance.collection("posts").doc().set(
         {
           "userName": userName,
-          "postText": postText,
+          "requestOrDonate": requestOrDonate,
+          "bloodGroup": bloodGroup,
+          "bloodAmount": bloodAmount,
+          "date": date,
+          "contact": contact,
+          "place": place,
           "profileUrl": profileUrl,
           "dateTime": dateTime,
           "ownerUid": FirebaseAuth.instance.currentUser!.uid,
