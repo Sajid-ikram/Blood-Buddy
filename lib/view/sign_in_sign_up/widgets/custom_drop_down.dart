@@ -39,7 +39,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
             ),
             elevation: 16,
             style: const TextStyle(color: Colors.black),
+
             onChanged: (String? newValue) {
+
               provider.changeBloodGroup(newValue ?? "Blood Group (None)");
 
             },

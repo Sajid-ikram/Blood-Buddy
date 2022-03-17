@@ -81,112 +81,96 @@ class _HomeState extends State<Home> {
                                 horizontal: 25.w, vertical: 10),
                             decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xffE3E3E3))),
-                            child: TextField(
-                              onChanged: (value) {
-                                provider.searchPost(value);
-                              },
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(10.7.sp),
-                                border: InputBorder.none,
-                                focusColor: appSecondaryColor,
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  size: 24.sp,
-                                  color: appSecondaryColor,
+                            child: const Center(
+                              child: Text(
+                                "All Blood Request",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red,
                                 ),
-                                hintText: "Search by Name",
-                                hintStyle: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey),
                               ),
                             ),
                           );
                         }
 
-                        if (data?.docs[index - 1]["userName"]
-                            .toLowerCase()
-                            .contains(provider.searchText.toLowerCase())) {
-                          return Container(
-                            width: 350.w,
-                            margin: EdgeInsets.fromLTRB(25.w, 10.h, 25.w, 10.h),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15.h, horizontal: 21.w),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: const Color(0xffE3E3E3), width: 1.7),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    UserProfileInfo(
-                                        uid: data?.docs[index - 1]["ownerUid"]),
-                                    SizedBox(width: 15.w),
-                                    Text(
-                                      daysBetween(
-                                          DateTime.parse(data?.docs[index - 1]
-                                              ["dateTime"]),
-                                          DateTime.now()),
-                                      style: TextStyle(
-                                        color: const Color(0xff9e9ea8),
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                        return Container(
+                          width: 350.w,
+                          margin: EdgeInsets.fromLTRB(25.w, 10.h, 25.w, 10.h),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15.h, horizontal: 21.w),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color(0xffE3E3E3), width: 1.7),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  UserProfileInfo(
+                                      uid: data?.docs[index - 1]["ownerUid"]),
+                                  SizedBox(width: 15.w),
+                                  Text(
+                                    daysBetween(
+                                        DateTime.parse(
+                                            data?.docs[index - 1]["dateTime"]),
+                                        DateTime.now()),
+                                    style: TextStyle(
+                                      color: const Color(0xff9e9ea8),
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
                                     ),
-                                    const Spacer(),
-                                    if (pro.uid ==
-                                        data?.docs[index - 1]["ownerUid"])
-                                      IconButton(
-                                        onPressed: () {
-                                          provider.deletePost(
-                                              data?.docs[index - 1].id ?? "");
-                                        },
-                                        icon: Icon(
-                                          Icons.delete,
-                                          size: 22.sp,
-                                        ),
-                                      )
+                                  ),
+                                  const Spacer(),
+                                  if (pro.uid ==
+                                      data?.docs[index - 1]["ownerUid"])
+                                    IconButton(
+                                      onPressed: () {
+                                        provider.deletePost(
+                                            data?.docs[index - 1].id ?? "");
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        size: 22.sp,
+                                      ),
+                                    )
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                height: 20,
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Column(
+                                  children: [
+                                    buildRow(
+                                        "Type : ",
+                                        data?.docs[index - 1]
+                                            ["requestOrDonate"]),
+                                    SizedBox(height: 5.h),
+                                    buildRow("Blood Group : ",
+                                        data?.docs[index - 1]["bloodGroup"]),
+                                    SizedBox(height: 5.h),
+                                    buildRow("Blood Amount : ",
+                                        data?.docs[index - 1]["bloodAmount"]),
+                                    SizedBox(height: 5.h),
+                                    buildRow(
+                                        "Date : ",
+                                        _changeTime(DateTime.parse(
+                                            data?.docs[index - 1]["date"]))),
+                                    SizedBox(height: 5.h),
+                                    buildRow("Contact : ",
+                                        data?.docs[index - 1]["contact"]),
+                                    SizedBox(height: 5.h),
+                                    buildRow("Place : ",
+                                        data?.docs[index - 1]["place"]),
                                   ],
                                 ),
-                                const Divider(
-                                  color: Colors.grey,
-                                  height: 20,
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Column(
-                                    children: [
-                                      buildRow(
-                                          "Type : ",
-                                          data?.docs[index - 1]
-                                              ["requestOrDonate"]),
-                                      SizedBox(height: 5.h),
-                                      buildRow("Blood Group : ",
-                                          data?.docs[index - 1]["bloodGroup"]),
-                                      SizedBox(height: 5.h),
-                                      buildRow("Blood Amount : ",
-                                          data?.docs[index - 1]["bloodAmount"]),
-                                      SizedBox(height: 5.h),
-                                      buildRow(
-                                          "Date : ",
-                                          _changeTime(DateTime.parse(
-                                              data?.docs[index - 1]["date"]))),
-                                      SizedBox(height: 5.h),
-                                      buildRow("Contact : ",
-                                          data?.docs[index - 1]["contact"]),
-                                      SizedBox(height: 5.h),
-                                      buildRow("Place : ",
-                                          data?.docs[index - 1]["place"]),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return const SizedBox();
+                              ),
+                            ],
+                          ),
+                        );
                       },
                       itemCount: size + 1,
                     );
@@ -209,7 +193,7 @@ class _HomeState extends State<Home> {
         ),
         Expanded(
           child: Text(
-            text2 ,
+            text2,
             style: TextStyle(
               fontSize: 15.sp,
             ),

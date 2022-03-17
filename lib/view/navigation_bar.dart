@@ -37,7 +37,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         backgroundColor: Colors.transparent,
         animationDuration: const Duration(milliseconds: 400),
         color: appSecondaryColor,
-
         items: [
           Icon(Icons.home, size: 30.sp, color: Colors.white),
           Icon(FontAwesomeIcons.solidHeart, size: 25.sp, color: Colors.white),
@@ -45,10 +44,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           Icon(Icons.person_rounded, size: 30.sp, color: Colors.white),
         ],
         onTap: (index) {
-          if(index == pageIndex){
+          if (index == pageIndex) {
             return;
           }
-          Provider.of<DonorProvider>(context,listen: false).searchUser("");
+          Provider.of<DonorProvider>(context, listen: false).searchUser("");
           setState(() {
             pageIndex = index;
           });

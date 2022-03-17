@@ -16,9 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:provider/provider.dart';
-
 import 'constant/constant.dart';
 
 void main() {
@@ -33,59 +31,58 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ));
     return ScreenUtilInit(
       designSize: const Size(414, 837),
-      builder: () =>
-          MultiProvider(
-            providers: [
-              ChangeNotifierProvider(create: (_) => Authentication()),
-              ChangeNotifierProvider(create: (_) => PostProvider()),
-              ChangeNotifierProvider(create: (_) => ProfileProvider()),
-              ChangeNotifierProvider(create: (_) => DonorProvider()),
-            ],
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Blood Buddy',
-              theme: ThemeData(
-
-                primarySwatch: Colors.teal,
-                scaffoldBackgroundColor: Colors.white,
-              ),
-              home: FutureBuilder(
-                future: _initialization,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Exception(
-                      massage: "Error",
-                    );
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return const MiddleOfHomeAndSignIn();
-                  }
-                  return const Exception(
-                    massage: "Loading",
-                  );
-                },
-              ),
-              routes: {
-                // "SignIn": (ctx) => const SignIn(),
-                "SignIn": (ctx) => const SignIn(),
-                "SignUp": (ctx) => const SignUp(),
-                "OnBoarding": (ctx) => const OnBoarding(),
-                "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
-                "AddNewPostPage": (ctx) => const AddNewPostPage(),
-                "EditProfile": (ctx) => const EditProfile(),
-                "ForgotPass": (ctx) => const ForgotPass(),
-
-
-              },
-            ),
+      builder: () => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => Authentication()),
+          ChangeNotifierProvider(create: (_) => PostProvider()),
+          ChangeNotifierProvider(create: (_) => ProfileProvider()),
+          ChangeNotifierProvider(create: (_) => DonorProvider()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Blood Buddy',
+          theme: ThemeData(
+            primarySwatch: Colors.teal,
+            scaffoldBackgroundColor: Colors.white,
           ),
+          home: FutureBuilder(
+            future: _initialization,
+            builder: (context, snapshot) {
+
+              if (snapshot.hasError) {
+                return const Exception(
+                  massage: "Error",
+                );
+              }
+
+              if (snapshot.connectionState == ConnectionState.done) {
+                return const MiddleOfHomeAndSignIn();
+              }
+
+              return const Exception(
+                massage: "Loading",
+              );
+            },
+          ),
+          routes: {
+            // "SignIn": (ctx) => const SignIn(),
+            "SignIn": (ctx) => const SignIn(),
+            "SignUp": (ctx) => const SignUp(),
+            "OnBoarding": (ctx) => const OnBoarding(),
+            "MiddleOfHomeAndSignIn": (ctx) => const MiddleOfHomeAndSignIn(),
+            "AddNewPostPage": (ctx) => const AddNewPostPage(),
+            "EditProfile": (ctx) => const EditProfile(),
+            "ForgotPass": (ctx) => const ForgotPass(),
+          },
+        ),
+      ),
     );
   }
 }
@@ -117,9 +114,10 @@ class MiddleOfHomeAndSignIn extends StatefulWidget {
 class _MiddleOfHomeAndSignInState extends State<MiddleOfHomeAndSignIn> {
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder<User?>(
       stream:
-      Provider.of<Authentication>(context, listen: false).authStateChange,
+          Provider.of<Authentication>(context, listen: false).authStateChange,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(

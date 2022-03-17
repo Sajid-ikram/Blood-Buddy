@@ -1,6 +1,4 @@
-import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,7 +8,6 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).padding.top;
-
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -22,7 +19,7 @@ class OnBoarding extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 330.h,
+                  height: 290.h,
                   width: double.infinity,
                   child: Center(
                       child: Image.asset(
@@ -30,19 +27,6 @@ class OnBoarding extends StatelessWidget {
                     fit: BoxFit.fill,
                   )),
                 ),
-                /*SizedBox(
-                  height: 60.h,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      "Blood Buddy",
-                      style: TextStyle(
-                          fontSize: 50.sp,
-                          color: appMainColor,
-                          fontWeight: FontWeight.w900),
-                    ),
-                  ),
-                ),*/
                 SizedBox(height: 40.h),
                 InkWell(
                   onTap: () {

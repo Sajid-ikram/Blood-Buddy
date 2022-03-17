@@ -19,12 +19,11 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController numberController = TextEditingController();
-
-  bool isTeacher = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -51,7 +50,7 @@ class _SignUpState extends State<SignUp> {
         )
             .then((value) async {
           if (value != "Success") {
-
+            snackBar(context, "Something went wrong");
           } else {
             final User? user = FirebaseAuth.instance.currentUser;
             if (user != null) {
@@ -60,7 +59,7 @@ class _SignUpState extends State<SignUp> {
           }
         });
       } catch (e) {
-        print("dagggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg********************");
+        snackBar(context, "Having some error");
       }
     }
   }
@@ -109,6 +108,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 10.h),
                     InkWell(
                       onTap: () {
+
                         if(Provider.of<Authentication>(context,listen: false).dropdownValue.length > 4){
                           snackBar(context, "Select a blood group");
                         }else{

@@ -17,7 +17,7 @@ AppBar customAppBar(String text,BuildContext context) {
     actions: [
       if (text == "Home")
         IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.add,
             color: Colors.black,
           ),
