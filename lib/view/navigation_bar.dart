@@ -23,7 +23,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   List<Widget> pages = [
     const Home(),
     const Donor(),
-    const Covid(),
+    const Message(),
     const Profile(),
   ];
 
@@ -40,7 +40,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         items: [
           Icon(Icons.home, size: 30.sp, color: Colors.white),
           Icon(FontAwesomeIcons.solidHeart, size: 25.sp, color: Colors.white),
-          Icon(FontAwesomeIcons.userMd, size: 25.sp, color: Colors.white),
+          Icon(Icons.message, size: 25.sp, color: Colors.white),
           Icon(Icons.person_rounded, size: 30.sp, color: Colors.white),
         ],
         onTap: (index) {

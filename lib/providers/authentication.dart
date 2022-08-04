@@ -95,6 +95,7 @@ class Authentication with ChangeNotifier {
               "url": "",
               "lastDonate": "",
               "location": "",
+              "role": "user",
             },
           );
           Navigator.of(context).pushReplacementNamed("MiddleOfHomeAndSignIn");

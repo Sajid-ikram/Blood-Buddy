@@ -18,6 +18,7 @@ class ProfileProvider extends ChangeNotifier {
   String uid = '';
   String lastDonate = '';
   String location = '';
+  String role = '';
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -29,6 +30,7 @@ class ProfileProvider extends ChangeNotifier {
     number = userInfo["number"];
     lastDonate = userInfo["lastDonate"];
     location = userInfo["location"];
+    role = userInfo["role"];
     uid = id;
     notifyListeners();
   }

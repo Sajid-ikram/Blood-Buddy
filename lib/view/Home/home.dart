@@ -1,3 +1,5 @@
+import 'package:blood_buddy/view/Home/widgets/customDrawer.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
@@ -39,11 +41,51 @@ class _HomeState extends State<Home> {
     }
   }
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<ProfileProvider>(context);
     return Scaffold(
-      appBar: customAppBar("Home", context),
+      key: scaffoldKey,
+      appBar: AppBar(
+        centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15.w),
+          child: GestureDetector(
+            child: Icon(
+              FontAwesomeIcons.bars,
+              color: Colors.black,
+            ),
+            onTap: () => scaffoldKey.currentState?.openDrawer(),
+          ),
+        ),
+        title: Text(
+          "Home",
+          style: TextStyle(
+            fontSize: 20.sp,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed("AddNewPostPage");
+            },
+          ),
+          SizedBox(
+            width: 8.w,
+          )
+        ],
+      ),
+      drawer: customDrawer(context),
       body: Stack(
         children: [
           Align(
@@ -123,7 +165,8 @@ class _HomeState extends State<Home> {
                                   ),
                                   const Spacer(),
                                   if (pro.uid ==
-                                      data?.docs[index - 1]["ownerUid"])
+                                          data?.docs[index - 1]["ownerUid"] ||
+                                      pro.role == "admin")
                                     IconButton(
                                       onPressed: () {
                                         provider.deletePost(

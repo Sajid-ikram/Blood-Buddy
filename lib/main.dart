@@ -3,7 +3,6 @@ import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/Home/add_post.dart';
-import 'package:blood_buddy/view/Home/home.dart';
 import 'package:blood_buddy/view/navigation_bar.dart';
 import 'package:blood_buddy/view/profile/edit_profile.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/forgot_pass.dart';
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
     ));
     return ScreenUtilInit(
       designSize: const Size(414, 837),
-      builder: () => MultiProvider(
+      builder: (context, _) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => Authentication()),
           ChangeNotifierProvider(create: (_) => PostProvider()),
@@ -114,7 +113,6 @@ class MiddleOfHomeAndSignIn extends StatefulWidget {
 class _MiddleOfHomeAndSignInState extends State<MiddleOfHomeAndSignIn> {
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder<User?>(
       stream:
           Provider.of<Authentication>(context, listen: false).authStateChange,

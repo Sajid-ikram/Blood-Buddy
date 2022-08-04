@@ -18,6 +18,7 @@ class _DonorState extends State<Donor> {
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<DonorProvider>(context, listen: false);
+
     return Scaffold(
       appBar: customAppBar("Donors", context),
       body: StreamBuilder<QuerySnapshot>(
@@ -33,6 +34,7 @@ class _DonorState extends State<Donor> {
           }
 
           final data = snapshot.data;
+
           return Consumer<DonorProvider>(
             builder: (context, provider, child) {
               return ListView.builder(
@@ -85,83 +87,78 @@ class _DonorState extends State<Donor> {
                       (data?.docs[index - 1]["bloodGroup"].toLowerCase() ==
                               provider.searchUserText.toLowerCase() &&
                           isBeforeNinety)) {
-                    return Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          //height: 200.w,
-                          margin: EdgeInsets.fromLTRB(25.w, 10.h, 25.w, 10.h),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.h, horizontal: 10.w),
-                          decoration: BoxDecoration(
-                            //color: Colors.grey.withOpacity(0.2),
-                            //borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xffE3E3E3), width: 1.7),
-                          ),
-                          child: Row(
-                            children: [
-                              data?.docs[index - 1]["url"] != ""
-                                  ? Container(
-                                      width: 130.w,
-                                      height: 170.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(
-                                          data?.docs[index - 1]["url"],
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 130.w,
-                                      height: 170.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(
-                                          "assets/profile.png",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                    return Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.fromLTRB(25.w, 10.h, 25.w, 10.h),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.h, horizontal: 10.w),
+                      decoration: BoxDecoration(
+                        //color: Colors.grey.withOpacity(0.2),
+                        //borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: const Color(0xffE3E3E3), width: 1.7),
+                      ),
+                      child: Row(
+                        children: [
+                          data?.docs[index - 1]["url"] != ""
+                              ? Container(
+                                  width: 130.w,
+                                  height: 170.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      data?.docs[index - 1]["url"],
+                                      fit: BoxFit.cover,
                                     ),
-                              SizedBox(width: 15.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data?.docs[index - 1]["name"],
-                                    style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: appSecondaryColor),
                                   ),
-                                  SizedBox(height: 10.h),
-                                  buildRow("Blood Group :",
-                                      data?.docs[index - 1]["bloodGroup"]),
-                                  SizedBox(height: 5.h),
-                                  buildRow("Number :",
-                                      data?.docs[index - 1]["number"]),
-                                  SizedBox(height: 5.h),
-                                  buildRow(
-                                    "Location :",
-                                    data?.docs[index - 1]["location"] == ""
-                                        ? "Not Available"
-                                        : data?.docs[index - 1]["location"],
+                                )
+                              : Container(
+                                  width: 130.w,
+                                  height: 170.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ],
-                              )
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      "assets/profile.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                          SizedBox(width: 15.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data?.docs[index - 1]["name"],
+                                style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: appSecondaryColor),
+                              ),
+                              SizedBox(height: 10.h),
+                              buildRow("Blood Group :",
+                                  data?.docs[index - 1]["bloodGroup"]),
+                              SizedBox(height: 5.h),
+                              buildRow("Number :",
+                                  data?.docs[index - 1]["number"]),
+                              SizedBox(height: 5.h),
+                              buildRow(
+                                "Location :",
+                                data?.docs[index - 1]["location"] == ""
+                                    ? "Not Available"
+                                    : data?.docs[index - 1]["location"],
+                              ),
                             ],
-                          ),
-                        ),
-                      ],
+                          )
+                        ],
+                      ),
                     );
                   }
                   return const SizedBox();

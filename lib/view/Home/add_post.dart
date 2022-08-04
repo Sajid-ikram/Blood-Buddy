@@ -1,3 +1,4 @@
+import 'package:blood_buddy/constant/constant.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/widgets/custom_button.dart';
@@ -7,6 +8,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/authentication.dart';
+import '../sign_in_sign_up/widgets/custom_drop_down.dart';
+import '../sign_in_sign_up/widgets/snackbar.dart';
 
 class AddNewPostPage extends StatefulWidget {
   const AddNewPostPage({Key? key}) : super(key: key);
@@ -18,23 +23,24 @@ class AddNewPostPage extends StatefulWidget {
 class _AddNewPostPageState extends State<AddNewPostPage> {
   Future uploadPost() async {
     try {
-      if(_dateTime == null){
+      if (_dateTime == null) {
         const snackBar = SnackBar(
           content: Text('Select a date'),
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        return ;
+        return;
       }
 
       if (_formKey.currentState!.validate()) {
         buildLoadingScreen(context);
         var pro = Provider.of<ProfileProvider>(context, listen: false);
+        var pro2 = Provider.of<Authentication>(context, listen: false);
         Provider.of<PostProvider>(context, listen: false).addNewPost(
             userName: pro.name,
             profileUrl: pro.url,
-            requestOrDonate: requestOrDonateController.text,
-            bloodGroup: bloodGroupController.text,
+            requestOrDonate: isDonate ? "Donate" : "Request",
+            bloodGroup: pro2.dropdownValue,
             bloodAmount: bloodAmountController.text,
             date: _dateTime.toString(),
             place: placeController.text,
@@ -49,12 +55,12 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     }
   }
 
-  TextEditingController requestOrDonateController = TextEditingController();
-  TextEditingController bloodGroupController = TextEditingController();
   TextEditingController bloodAmountController = TextEditingController();
   TextEditingController placeController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   DateTime? _dateTime;
+
+  bool isDonate = true;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -90,35 +96,34 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isDonate = !isDonate;
+                      });
+                    },
+                    child: buildContainer("Donate Blood", isDonate),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isDonate = !isDonate;
+                      });
+                    },
+                    child: buildContainer("Request Blood", !isDonate),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              const CustomDropDown(),
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      style: const TextStyle(color: Colors.black),
-                      controller: requestOrDonateController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "This field is required";
-                        }
-                        return null;
-                      },
-                      decoration:
-                          buildInputDecoration("Request Or Donate Blood"),
-                    ),
-                    SizedBox(height: 10.h),
-                    TextFormField(
-                      style: const TextStyle(color: Colors.black),
-                      controller: bloodGroupController,
-                      decoration: buildInputDecoration("Blood Group"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "This field is required";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 5.h),
                     TextFormField(
                       style: const TextStyle(color: Colors.black),
                       controller: bloodAmountController,
@@ -183,14 +188,43 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               ),
               SizedBox(height: 20.h),
               InkWell(
-                  onTap: () {
+                onTap: () {
+                  if (Provider.of<Authentication>(context, listen: false)
+                          .dropdownValue
+                          .length >
+                      4) {
+                    snackBar(context, "Select a blood group");
+                  } else {
                     uploadPost();
-                  },
-                  child: buildButton("Post", 400, 18, 53))
+                  }
+                },
+                child: buildButton("Post", 400, 18, 53),
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Container buildContainer(String name, bool value) {
+    return Container(
+      width: 160.w,
+      height: 50.h,
+      decoration: BoxDecoration(
+        color: value ? appMainColor : Colors.white,
+        border: Border.all(
+          color: value ? appMainColor : Colors.grey,
+        ),
+        borderRadius: BorderRadius.circular(10.sp),
+      ),
+      child: Center(
+          child: Text(
+        name,
+        style: TextStyle(
+          color: value ? Colors.white : Colors.black,
+        ),
+      )),
     );
   }
 
@@ -203,7 +237,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
-            color: Colors.grey,
+            color: Color(0xff7B7878),
           )),
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
