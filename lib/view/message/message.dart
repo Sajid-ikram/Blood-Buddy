@@ -15,6 +15,9 @@ class _MessageState extends State<Message> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar("Message", context),
+      body: Center(
+        child: Text("Upcoming"),
+      ),
     );
   }
 }

@@ -8,8 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'Home/home.dart';
-import 'covid/covid.dart';
+
 import 'donor/donor.dart';
+import 'message/message.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({Key? key}) : super(key: key);
