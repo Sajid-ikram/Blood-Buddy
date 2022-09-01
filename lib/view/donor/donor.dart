@@ -135,12 +135,17 @@ class _DonorState extends State<Donor> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                data?.docs[index - 1]["name"],
-                                style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: appSecondaryColor),
+                              Row(
+                                children: [
+                                  Text(
+                                    data?.docs[index - 1]["name"],
+                                    style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: appSecondaryColor),
+                                  ),
+                                  IconButton(onPressed: (){}, icon: Icon(Icons.mail_outline_rounded,size: 20.sp,))
+                                ],
                               ),
                               SizedBox(height: 10.h),
                               buildRow("Blood Group :",

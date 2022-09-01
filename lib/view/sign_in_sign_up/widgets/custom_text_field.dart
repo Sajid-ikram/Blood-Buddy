@@ -10,11 +10,11 @@ Padding customTextField(TextEditingController controller, String text,
       style: const TextStyle(color: Colors.black),
       controller: controller,
       validator: (value) {
-        if (text == "Email Address") {
-          if (value == null || value.isEmpty) {
-            return "Enter an email";
-          } else {
-            return null;
+        if (text == "LU G suite Email") {
+          if (value != null && !value.contains("@lus.ac.bd")) {
+            return "You have to use LU G Suite Email";
+          } else if (value == null || value.isEmpty) {
+            return "Field can not be empty!";
           }
         } else if (text == "Password") {
           if (value == null || value.isEmpty) {
@@ -36,12 +36,19 @@ Padding customTextField(TextEditingController controller, String text,
           } else {
             return null;
           }
+        } else if (text == "Batch") {
+          if (value == null || value.isEmpty) {
+            return "Enter Batch";
+          } else {
+            return null;
+          }
         } else {
           if (value == null || value.isEmpty) {
             snackBar(context, "All fields are required!");
             return "This field is required";
           }
         }
+        return null;
       },
       keyboardAppearance: Brightness.light,
       keyboardType: TextInputType.emailAddress,

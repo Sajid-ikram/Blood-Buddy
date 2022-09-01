@@ -28,13 +28,14 @@ class _ProfileState extends State<Profile> {
         return Scaffold(
           body: SingleChildScrollView(
             child: SizedBox(
-              width: 414,
-              height: 850,
+              width: 414.w,
+              height: 837.h,
               child: Stack(
                 children: [
                   ListView(
                     padding: EdgeInsets.zero,
-                    physics: const BouncingScrollPhysics(),
+                    //physics: const BouncingScrollPhysics(),
+
                     children: [
                       Container(
                         height: size.height * 0.28,
@@ -49,6 +50,7 @@ class _ProfileState extends State<Profile> {
                       buildText("Email", provider.email),
                       buildText("Number", provider.number),
                       buildText("Location", provider.location),
+                      buildText("Batch", provider.batch),
                       buildText(
                           "Last Donate date",
                           provider.lastDonate.isNotEmpty
@@ -56,6 +58,7 @@ class _ProfileState extends State<Profile> {
                               : "Not provided"),
                       buildLogout("Edit Profile", Icons.edit, provider),
                       buildLogout("LogOut", Icons.logout, provider),
+                      SizedBox(height: 80.h),
                     ],
                   ),
                   ProfilePicture(name: provider.name)

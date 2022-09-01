@@ -24,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController numberController = TextEditingController();
+  TextEditingController batchController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -33,6 +34,7 @@ class _SignUpState extends State<SignUp> {
     emailController.clear();
     passwordController.clear();
     numberController.clear();
+    batchController.clear();
     super.dispose();
   }
 
@@ -47,6 +49,7 @@ class _SignUpState extends State<SignUp> {
           password: passwordController.text,
           context: context,
           number: numberController.text,
+          batch: batchController.text
         )
             .then((value) async {
           if (value != "Success") {
@@ -95,11 +98,13 @@ class _SignUpState extends State<SignUp> {
                           customTextField(nameController, "Enter your name",
                               false, context),
                           customTextField(
-                              emailController, "Email Address", false, context),
+                              emailController, "LU G suite Email", false, context),
                           customTextField(
                               passwordController, "Password", false, context),
                           customTextField(
                               numberController, "Number", false, context),
+                          customTextField(
+                              batchController, "Batch", false, context),
 
                           const CustomDropDown(),
                         ],

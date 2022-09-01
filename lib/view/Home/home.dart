@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -150,19 +151,8 @@ class _HomeState extends State<Home> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   UserProfileInfo(
-                                      uid: data?.docs[index - 1]["ownerUid"]),
-                                  SizedBox(width: 15.w),
-                                  Text(
-                                    daysBetween(
-                                        DateTime.parse(
-                                            data?.docs[index - 1]["dateTime"]),
-                                        DateTime.now()),
-                                    style: TextStyle(
-                                      color: const Color(0xff9e9ea8),
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
+                                      uid: data?.docs[index - 1]["ownerUid"],
+                                      date: data?.docs[index - 1]["dateTime"]),
                                   const Spacer(),
                                   if (pro.uid ==
                                           data?.docs[index - 1]["ownerUid"] ||
@@ -234,14 +224,35 @@ class _HomeState extends State<Home> {
           text1,
           style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold),
         ),
-        Expanded(
-          child: Text(
-            text2,
-            style: TextStyle(
-              fontSize: 15.sp,
-            ),
+        GestureDetector(
+          onTap: () {
+            if (text1 == "Contact : ") {
+              launch("tel://$text2");
+            }
+          },
+          child: Row(
+            children: [
+              Text(
+                text2,
+                style: TextStyle(
+                  fontSize: 15.sp,
+                  decoration:
+                      text1 == "Contact : " ? TextDecoration.underline : null,
+                ),
+              ),
+              text1 == "Contact : "
+                  ? Padding(
+                      padding: EdgeInsets.only(left: 15.w),
+                      child: Icon(
+                        Icons.phone,
+                        color: Colors.green,
+                        size: 16.sp,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           ),
-        ),
+        )
       ],
     );
   }

@@ -51,6 +51,7 @@ class Authentication with ChangeNotifier {
     required String email,
     required String password,
     required String number,
+    required String batch,
     required BuildContext context,
   }) async {
     try {
@@ -96,6 +97,7 @@ class Authentication with ChangeNotifier {
               "lastDonate": "",
               "location": "",
               "role": "user",
+              "batch" : batch,
             },
           );
           Navigator.of(context).pushReplacementNamed("MiddleOfHomeAndSignIn");

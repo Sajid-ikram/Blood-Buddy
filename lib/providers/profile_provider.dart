@@ -19,6 +19,7 @@ class ProfileProvider extends ChangeNotifier {
   String lastDonate = '';
   String location = '';
   String role = '';
+  String batch = '';
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -31,6 +32,7 @@ class ProfileProvider extends ChangeNotifier {
     lastDonate = userInfo["lastDonate"];
     location = userInfo["location"];
     role = userInfo["role"];
+    batch = userInfo["batch"];
     uid = id;
     notifyListeners();
   }
@@ -44,6 +46,7 @@ class ProfileProvider extends ChangeNotifier {
     required String number,
     required String dateTime,
     required String location,
+    required String batch,
     required BuildContext context,
   }) async {
     try {
@@ -55,6 +58,7 @@ class ProfileProvider extends ChangeNotifier {
               Provider.of<Authentication>(context, listen: false).dropdownValue,
           "lastDonate": dateTime,
           "location": location,
+          "batch": batch,
         },
       );
       this.name = name;

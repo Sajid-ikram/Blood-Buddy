@@ -18,6 +18,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   late TextEditingController changeNameController;
   late TextEditingController numberController;
+  late TextEditingController batchController;
   late TextEditingController locationController;
   DateTime? _dateTime;
 
@@ -28,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
     var pro = Provider.of<ProfileProvider>(context, listen: false);
     changeNameController = TextEditingController(text: pro.name);
     numberController = TextEditingController(text: pro.number);
+    batchController = TextEditingController(text: pro.batch);
     locationController = TextEditingController(text: pro.location);
     super.initState();
   }
@@ -40,6 +42,7 @@ class _EditProfileState extends State<EditProfile> {
             .updateProfileInfo(
           name: changeNameController.text,
           number: numberController.text,
+          batch: batchController.text,
           location: locationController.text,
           context: context,
           dateTime: _dateTime == null ? "" : _dateTime.toString(),
@@ -86,6 +89,7 @@ class _EditProfileState extends State<EditProfile> {
                     _buildContainer(
                         "Change name", changeNameController, context),
                     _buildContainer("Change Number", numberController, context),
+                    _buildContainer("Change Batch", batchController, context),
                     _buildContainer(
                         "Change Location", locationController, context),
                   ],
@@ -186,7 +190,13 @@ Container _buildContainer(
               } else {
                 return null;
               }
+            } else if (text == "Change Batch") {
+              if (value == null || value.isEmpty) {
+                return "Enter a name";
+              }
             }
+
+            return null;
           },
           decoration: InputDecoration(
             errorStyle: const TextStyle(fontSize: 13),
