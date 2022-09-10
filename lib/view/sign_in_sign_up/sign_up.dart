@@ -94,6 +94,7 @@ class _SignUpState extends State<SignUp> {
                     Form(
                       key: _formKey,
                       child: Column(
+
                         children: [
                           customTextField(nameController, "Enter your name",
                               false, context),

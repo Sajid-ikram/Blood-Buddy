@@ -16,17 +16,30 @@ Drawer customDrawer(BuildContext context) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                height: 130,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey.withOpacity(0.3)),
-                  image: DecorationImage(
-                    image: AssetImage('assets/profile.png'),
-                  ),
-                ),
-              ),
+              pro.url != ""
+                  ? Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                        image: DecorationImage(
+                          image: NetworkImage(pro.url),
+                          fit: BoxFit.cover
+                        ),
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                        image: DecorationImage(
+                          image: AssetImage('assets/profile.png'),
+                        ),
+                      ),
+                    ),
               Text(
                 pro.name,
                 style: TextStyle(color: Colors.black, fontSize: 20),
@@ -49,15 +62,14 @@ Drawer customDrawer(BuildContext context) {
         listTile(context, "Coming"),
         listTile(context, "About Us"),
         listTile(context, "Contact Us"),
-
       ],
     ),
   );
 }
 
-Padding listTile(BuildContext context,String name) {
+Padding listTile(BuildContext context, String name) {
   return Padding(
-    padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
+    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
     child: Row(
       children: [
         Text(

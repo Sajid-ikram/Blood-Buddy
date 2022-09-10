@@ -134,25 +134,38 @@ class _DonorState extends State<Donor> {
                           SizedBox(width: 15.w),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    data?.docs[index - 1]["name"],
-                                    style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: appSecondaryColor),
-                                  ),
-                                  IconButton(onPressed: (){}, icon: Icon(Icons.mail_outline_rounded,size: 20.sp,))
-                                ],
+                              SizedBox(
+                                height: 40.h,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      constraints:
+                                          BoxConstraints(maxWidth: 140.w),
+                                      child: Text(
+                                        data?.docs[index - 1]["name"],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: appSecondaryColor),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.mail_outline_rounded,
+                                          size: 20.sp),
+                                      padding: EdgeInsets.zero,
+                                    )
+                                  ],
+                                ),
                               ),
-                              SizedBox(height: 10.h),
                               buildRow("Blood Group :",
                                   data?.docs[index - 1]["bloodGroup"]),
                               SizedBox(height: 5.h),
-                              buildRow("Number :",
-                                  data?.docs[index - 1]["number"]),
+                              buildRow(
+                                  "Number :", data?.docs[index - 1]["number"]),
                               SizedBox(height: 5.h),
                               buildRow(
                                 "Location :",

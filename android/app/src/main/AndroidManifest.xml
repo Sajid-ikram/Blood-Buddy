@@ -2,7 +2,7 @@
     package="com.example.blood_buddy">
 
    <application
-        android:label="blood_buddy"
+        android:label="LU Blood Buddy"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

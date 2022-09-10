@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../providers/profile_provider.dart';
 
 class UserProfileInfo extends StatefulWidget {
-  UserProfileInfo({Key? key, required this.uid, required this.date}) : super(key: key);
+  UserProfileInfo({Key? key, required this.uid, required this.date})
+      : super(key: key);
   String uid;
   String date;
 
@@ -38,24 +39,40 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
   Widget build(BuildContext context) {
     return !isLoading
         ? Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               returnImage(data["url"]),
               SizedBox(width: 15.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    data["name"],
-                    style: TextStyle(
-                        fontSize: 17.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black),
+                  SizedBox(
+                    height: 27.h,
+                    child: Row(
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 150.w),
+                          child: Text(
+                            data['name'],
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontSize: 17.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.mail_outline_rounded, size: 18.sp),
+                          padding: EdgeInsets.zero,
+                        )
+                      ],
+                    ),
                   ),
                   Text(
-                    daysBetween(
-                        DateTime.parse(
-                            widget.date),
-                        DateTime.now()),
+                    daysBetween(DateTime.parse(widget.date), DateTime.now()),
                     style: TextStyle(
                       color: const Color(0xff9e9ea8),
                       fontSize: 13.sp,
@@ -64,8 +81,6 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
                   ),
                 ],
               ),
-              SizedBox(width: 10.w),
-              IconButton(onPressed: (){}, icon: Icon(Icons.mail_outline_rounded))
             ],
           )
         : Container();
@@ -76,14 +91,14 @@ Widget returnImage(String url) {
   return url != ""
       ? CircleAvatar(
           backgroundColor: Colors.grey,
-          radius: 21.sp,
+          radius: 23.sp,
           backgroundImage: NetworkImage(
             url,
           ),
         )
       : CircleAvatar(
           backgroundColor: Colors.grey,
-          radius: 21.sp,
+          radius: 23.sp,
           backgroundImage: const AssetImage("assets/profile.png"),
         );
 }

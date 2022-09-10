@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Padding customTextField(TextEditingController controller, String text,
     bool isPass, BuildContext context) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 8.h),
+    padding: EdgeInsets.fromLTRB(32.w, 8.h, 32.w, 8.h),
     child: TextFormField(
       style: const TextStyle(color: Colors.black),
       controller: controller,
