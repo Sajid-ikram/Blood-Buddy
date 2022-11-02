@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.blood_buddy">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
    <application
         android:label="LU Blood Buddy"
@@ -34,6 +37,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCxDsmBrmV6jlYoJsgFB3bDR-euGe3v2Ho"/>
+
     </application>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <queries>
@@ -44,4 +51,8 @@
         </intent>
 
     </queries>
+
+
+
+
 </manifest>

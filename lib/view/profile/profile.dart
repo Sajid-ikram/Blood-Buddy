@@ -6,8 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:location/location.dart' as loc;
+
+import '../sign_in_sign_up/widgets/snackbar.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -49,13 +54,15 @@ class _ProfileState extends State<Profile> {
                       buildText("Blood Group", provider.bloodGroup),
                       buildText("Email", provider.email),
                       buildText("Number", provider.number),
-                      buildText("Location", provider.location),
                       buildText("Batch", provider.batch),
                       buildText(
                           "Last Donate date",
                           provider.lastDonate.isNotEmpty
                               ? _changeTime(provider.lastDonate)
                               : "Not provided"),
+                      buildText("Location", provider.location),
+                      buildLogout(
+                          "Show on Google map", Icons.location_on, provider),
                       buildLogout("Edit Profile", Icons.edit, provider),
                       buildLogout("LogOut", Icons.logout, provider),
                       SizedBox(height: 80.h),
@@ -83,8 +90,21 @@ class _ProfileState extends State<Profile> {
       onTap: () {
         if (name == "LogOut") {
           Provider.of<Authentication>(context, listen: false).signOut();
-        } else {
+        } else if (name == "Edit Profile") {
           Navigator.of(context).pushNamed("EditProfile");
+        } else {
+          if(pro.longitude != 0 && pro.latitude != 0 ){
+
+            Navigator.of(context).pushNamed("MyMap");
+          }else{
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  "Map Location is not available",
+                ),
+              ),
+            );
+          }
         }
       },
       child: Container(

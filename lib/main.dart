@@ -5,6 +5,7 @@ import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/Home/add_post.dart';
 import 'package:blood_buddy/view/navigation_bar.dart';
 import 'package:blood_buddy/view/profile/edit_profile.dart';
+import 'package:blood_buddy/view/profile/map.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/forgot_pass.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/onboarding.dart';
 import 'package:blood_buddy/view/sign_in_sign_up/sign_in.dart';
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
             "AddNewPostPage": (ctx) => const AddNewPostPage(),
             "EditProfile": (ctx) => const EditProfile(),
             "ForgotPass": (ctx) => const ForgotPass(),
+            "MyMap": (ctx) => const MyMap(),
           },
         ),
       ),

@@ -98,6 +98,8 @@ class Authentication with ChangeNotifier {
               "location": "",
               "role": "user",
               "batch" : batch,
+              'latitude': '',
+              'longitude': '',
             },
           );
           Navigator.of(context).pushReplacementNamed("MiddleOfHomeAndSignIn");

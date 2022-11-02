@@ -7,6 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:location/location.dart' as loc;
+
+import '../sign_in_sign_up/widgets/snackbar.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -21,6 +26,8 @@ class _EditProfileState extends State<EditProfile> {
   late TextEditingController batchController;
   late TextEditingController locationController;
   DateTime? _dateTime;
+
+  final loc.Location location = loc.Location();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -78,8 +85,8 @@ class _EditProfileState extends State<EditProfile> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: 740.h,
-          padding: EdgeInsets.all(32.sp),
+          height: 760.h,
+          padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Column(
             children: [
               Form(
@@ -109,6 +116,14 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(height: 5.h),
               const CustomDropDown(),
               SizedBox(height: 15.h),
+              GestureDetector(
+                onTap: () {
+                  _getLocation();
+                },
+                child: buildButton("Add My Location", 350, 16, 54,
+                    color: Colors.grey),
+              ),
+              SizedBox(height: 15.h),
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
@@ -137,7 +152,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
               ),
-              const Spacer(),
+              SizedBox(height: 25.h),
               GestureDetector(
                 onTap: () {
                   validate();
@@ -152,6 +167,61 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
+  }
+
+  _getLocation() async {
+    try {
+      var pro = Provider.of<ProfileProvider>(context, listen: false);
+
+      bool isAllowed = await requestLocationPermission();
+      loc.LocationData? locationResult;
+
+      if (isAllowed) {
+        locationResult = await location.getLocation();
+      }
+
+      if (locationResult != null) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(pro.uid)
+            .update(
+          {
+            'latitude': locationResult.latitude,
+            'longitude': locationResult.longitude,
+          },
+        );
+
+        pro.latitude = locationResult.latitude!;
+        pro.longitude = locationResult.longitude!;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              "Location Added",
+            ),
+          ),
+        );
+      } else {
+        snackBar(context, "Location is not granted");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> requestLocationPermission() async {
+    /// status can either be: granted, denied, restricted or permanentlyDenied
+    var status = await Permission.location.status;
+    if (status.isGranted) {
+      return true;
+    } else if (status.isDenied) {
+      // We didn't ask for permission yet or the permission has been denied before but not permanently.
+      if (await Permission.location.request().isGranted) {
+        // Either the permission was already granted before or the user just granted it.
+        return true;
+      }
+    }
+    return false;
   }
 }
 

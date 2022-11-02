@@ -2,12 +2,13 @@ import 'package:blood_buddy/constant/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Container buildButton(String text,double width,double size,double height) {
+Container buildButton(String text,double width,double size,double height,
+    {Color? color}) {
   return Container(
     height: height.h,
     width: width.w,
     decoration: BoxDecoration(
-      color: appMainColor,
+      color: color?? appMainColor,
       borderRadius: BorderRadius.circular(10),
     ),
     child: Center(

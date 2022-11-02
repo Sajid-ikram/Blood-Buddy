@@ -162,17 +162,17 @@ class _DonorState extends State<Donor> {
                                 ),
                               ),
                               buildRow("Blood Group :",
-                                  data?.docs[index - 1]["bloodGroup"]),
+                                  data?.docs[index - 1]["bloodGroup"], false),
+                              SizedBox(height: 5.h),
+                              buildRow("Number :",
+                                  data?.docs[index - 1]["number"], false),
                               SizedBox(height: 5.h),
                               buildRow(
-                                  "Number :", data?.docs[index - 1]["number"]),
-                              SizedBox(height: 5.h),
-                              buildRow(
-                                "Location :",
-                                data?.docs[index - 1]["location"] == ""
-                                    ? "Not Available"
-                                    : data?.docs[index - 1]["location"],
-                              ),
+                                  "Location :",
+                                  data?.docs[index - 1]["location"] == ""
+                                      ? "Not Available"
+                                      : data?.docs[index - 1]["location"],
+                                  data?.docs[index - 1]["latitude"] != '' ),
                             ],
                           )
                         ],
@@ -190,7 +190,7 @@ class _DonorState extends State<Donor> {
     );
   }
 
-  Column buildRow(String text1, String text2) {
+  Column buildRow(String text1, String text2, bool showLocation) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -224,16 +224,39 @@ class _DonorState extends State<Donor> {
                   ),
                 ),
               ),
-              text1 == "Number :"
-                  ? Padding(
-                      padding: EdgeInsets.only(left: 20.w),
-                      child: Icon(
-                        Icons.phone,
-                        color: Colors.green,
-                        size: 18.sp,
-                      ),
-                    )
-                  : const SizedBox(),
+              if (text1 == "Number :")
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w),
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.green,
+                    size: 18.sp,
+                  ),
+                ),
+              if (text1 == "Location :")
+                GestureDetector(
+                  onTap: () {
+                    if (showLocation) {
+                      Navigator.of(context).pushNamed("MyMap");
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "Map Location is not available",
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w),
+                    child: Icon(
+                      Icons.location_on,
+                      color: Colors.green,
+                      size: 18.sp,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

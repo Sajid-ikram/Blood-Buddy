@@ -20,6 +20,8 @@ class ProfileProvider extends ChangeNotifier {
   String location = '';
   String role = '';
   String batch = '';
+  double latitude = 0;
+  double longitude = 0;
 
   getUserInfo(String id) async {
     DocumentSnapshot userInfo =
@@ -33,6 +35,8 @@ class ProfileProvider extends ChangeNotifier {
     location = userInfo["location"];
     role = userInfo["role"];
     batch = userInfo["batch"];
+    longitude = userInfo["longitude"];
+    latitude = userInfo["latitude"];
     uid = id;
     notifyListeners();
   }
