@@ -181,26 +181,38 @@ class _EditProfileState extends State<EditProfile> {
       }
 
       if (locationResult != null) {
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(pro.uid)
-            .update(
-          {
-            'latitude': locationResult.latitude,
-            'longitude': locationResult.longitude,
-          },
-        );
 
-        pro.latitude = locationResult.latitude!;
-        pro.longitude = locationResult.longitude!;
+        try{
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(pro.uid)
+              .update(
+            {
+              'latitude': locationResult.latitude,
+              'longitude': locationResult.longitude,
+            },
+          );
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              "Location Added",
+          pro.latitude = locationResult.latitude!;
+          pro.longitude = locationResult.longitude!;
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                "Location Added",
+              ),
             ),
-          ),
-        );
+          );
+        }catch(err){
+          print(err);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                "Can Not Add",
+              ),
+            ),
+          );
+        }
       } else {
         snackBar(context, "Location is not granted");
       }

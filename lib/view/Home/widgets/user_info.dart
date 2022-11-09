@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../providers/profile_provider.dart';
 
 class UserProfileInfo extends StatefulWidget {
@@ -50,6 +51,7 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
                   SizedBox(
                     height: 27.h,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           constraints: BoxConstraints(maxWidth: 150.w),
@@ -63,10 +65,19 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
                                 color: Colors.black),
                           ),
                         ),
+                        SizedBox(width: 13.w),
+                        InkWell(
+                          onTap: () {},
+                          child: Icon(Icons.mail_outline_rounded, size: 18.sp),
+
+                        ),
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.mail_outline_rounded, size: 18.sp),
+                          onPressed: () {
+                            launch("tel://$data['contact']");
+                          },
+                          icon: Icon(Icons.phone, size: 18.sp),
                           padding: EdgeInsets.zero,
+                          color: Colors.green,
                         )
                       ],
                     ),

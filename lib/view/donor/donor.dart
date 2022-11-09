@@ -157,6 +157,13 @@ class _DonorState extends State<Donor> {
                                       icon: Icon(Icons.mail_outline_rounded,
                                           size: 20.sp),
                                       padding: EdgeInsets.zero,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        launch("tel://$data['contact']");
+                                      },
+                                      child: Icon(Icons.phone, size: 18.sp,color: Colors.green,),
+
                                     )
                                   ],
                                 ),
@@ -224,15 +231,7 @@ class _DonorState extends State<Donor> {
                   ),
                 ),
               ),
-              if (text1 == "Number :")
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w),
-                  child: Icon(
-                    Icons.phone,
-                    color: Colors.green,
-                    size: 18.sp,
-                  ),
-                ),
+
               if (text1 == "Location :")
                 GestureDetector(
                   onTap: () {

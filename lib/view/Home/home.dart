@@ -241,16 +241,7 @@ class _HomeState extends State<Home> {
                       text1 == "Contact : " ? TextDecoration.underline : null,
                 ),
               ),
-              text1 == "Contact : "
-                  ? Padding(
-                      padding: EdgeInsets.only(left: 15.w),
-                      child: Icon(
-                        Icons.phone,
-                        color: Colors.green,
-                        size: 16.sp,
-                      ),
-                    )
-                  : const SizedBox(),
+
             ],
           ),
         )
