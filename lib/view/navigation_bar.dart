@@ -7,10 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'Chat/chat_user.dart';
 import 'Home/home.dart';
 
 import 'donor/donor.dart';
-import 'message/message.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   List<Widget> pages = [
     const Home(),
     const Donor(),
-    const Message(),
+    const ChatUser(),
     const Profile(),
   ];
 

@@ -7,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../Chat/chat.dart';
+
 class Donor extends StatefulWidget {
   const Donor({Key? key}) : super(key: key);
 
@@ -153,7 +155,23 @@ class _DonorState extends State<Donor> {
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+
+                                        Future.delayed(Duration.zero, () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Chat(
+                                                name: data?.docs[index - 1]["name"],
+                                                url: data?.docs[index - 1]["url"],
+                                                uid: data?.docs[index - 1].id ?? "fsd",
+                                              ),
+                                            ),
+                                          );
+                                        });
+
+
+                                      },
                                       icon: Icon(Icons.mail_outline_rounded,
                                           size: 20.sp),
                                       padding: EdgeInsets.zero,

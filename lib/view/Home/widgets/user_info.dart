@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../providers/profile_provider.dart';
+import '../../Chat/chat.dart';
 
 class UserProfileInfo extends StatefulWidget {
   UserProfileInfo({Key? key, required this.uid, required this.date})
@@ -67,9 +68,21 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
                         ),
                         SizedBox(width: 13.w),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Future.delayed(Duration.zero, () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Chat(
+                                    name: data["name"],
+                                    url: data["url"],
+                                    uid: data.id,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
                           child: Icon(Icons.mail_outline_rounded, size: 18.sp),
-
                         ),
                         IconButton(
                           onPressed: () {

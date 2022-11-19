@@ -1,4 +1,5 @@
 import 'package:blood_buddy/providers/authentication.dart';
+import 'package:blood_buddy/providers/chat_provider.dart';
 import 'package:blood_buddy/providers/donor_provider.dart';
 import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => PostProvider()),
           ChangeNotifierProvider(create: (_) => ProfileProvider()),
           ChangeNotifierProvider(create: (_) => DonorProvider()),
+          ChangeNotifierProvider(create: (_) => ChatProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
