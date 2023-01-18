@@ -1,4 +1,4 @@
-import 'package:blood_buddy/view/Home/widgets/customDrawer.dart';
+import 'package:blood_buddy/view/drawer/customDrawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:blood_buddy/constant/constant.dart';

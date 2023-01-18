@@ -21,9 +21,15 @@ class _IndividualChatInfoState extends State<IndividualChatInfo> {
   late DocumentSnapshot data;
   bool isLoading = true;
 
-  @override
+/*  @override
   void initState() {
     getInfo();
+    super.initState();
+  }*/
+
+  @override
+  void initState() {
+    print("something");
     super.initState();
   }
 

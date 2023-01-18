@@ -1,3 +1,4 @@
+import 'package:blood_buddy/providers/chat_provider.dart';
 import 'package:blood_buddy/view/Chat/widgets/chat_user_top.dart';
 import 'package:blood_buddy/view/Chat/widgets/individual_chat_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,51 +22,57 @@ class _ChatUserState extends State<ChatUser> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ChatProvider>(context);
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 40.h),
-            chatTop(context),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("chatRooms")
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    print("===============================================1");
+      body: Consumer<ChatProvider>(
 
-                    if (snapshot.hasError) {
-                      return const Center(child: Text("Something went wrong"));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return SizedBox(); //buildLoadingScreen(context);
-                    }
+          builder: (_, bar, __) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 40.h),
+                chatTop(context),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection("chatRooms")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        print("===============================================1");
 
-                    final data = snapshot.data;
-                    if (data != null) {
-                      size = data.size;
-                      if (size == 0) {
-                        return Center(
-                          child: Text(
-                            "No chat to show",
-                            style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                          ),
-                        );
-                      }
+                        if (snapshot.hasError) {
+                          return const Center(child: Text("Something went wrong"));
+                        }
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return SizedBox(); //buildLoadingScreen(context);
+                        }
 
-                      return buildListOfChat(data);
-                    } else {
-                      return const Center(child: Text("Something went wrong"));
-                    }
-                  }),
-            )
-          ],
-        ),
+                        final data = snapshot.data;
+                        if (data != null) {
+                          size = data.size;
+                          if (size == 0) {
+                            return Center(
+                              child: Text(
+                                "No chat to show",
+                                style: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                            );
+                          }
+
+                          return buildListOfChat(data);
+                        } else {
+                          return const Center(child: Text("Something went wrong"));
+                        }
+                      }),
+                )
+              ],
+            ),
+          );
+        }
       ),
     );
   }

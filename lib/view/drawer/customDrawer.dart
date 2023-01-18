@@ -19,21 +19,21 @@ Drawer customDrawer(BuildContext context) {
               pro.url != ""
                   ? Container(
                       margin: EdgeInsets.only(bottom: 10),
-                      height: 130,
+                height: 130,
+                width: 130,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(10.sp),
                         border: Border.all(color: Colors.grey.withOpacity(0.3)),
                         image: DecorationImage(
-                          image: NetworkImage(pro.url),
-                          fit: BoxFit.cover
-                        ),
+                            image: NetworkImage(pro.url), fit: BoxFit.cover),
                       ),
                     )
                   : Container(
                       margin: EdgeInsets.only(bottom: 10),
                       height: 130,
+                      width: 130,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(10.sp),
                         border: Border.all(color: Colors.grey.withOpacity(0.3)),
                         image: DecorationImage(
                           image: AssetImage('assets/profile.png'),
@@ -60,7 +60,12 @@ Drawer customDrawer(BuildContext context) {
         listTile(context, "Coming"),
         listTile(context, "Coming"),
         listTile(context, "Coming"),
-        listTile(context, "About Us"),
+        InkWell(
+          onTap: (){
+            Navigator.of(context).pushNamed("AboutUs");
+          },
+          child: listTile(context, "About Us"),
+        ),
         listTile(context, "Contact Us"),
       ],
     ),

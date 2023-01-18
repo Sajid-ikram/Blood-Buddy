@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-var encryptionKey ='sdkgh48598ysjhgs98g734kdhf';
+
+var encryptionKey = 'sdkgh48598ysjhgs98g734kdhf';
 
 class ChatProvider with ChangeNotifier {
   String chatId = "";
@@ -32,6 +33,7 @@ class ChatProvider with ChangeNotifier {
     }
     return s;
   }
+
   /// Encryption And Decryption END ##############################
 
   getChatRoomIdByUsernames(String a, String b) {
@@ -44,7 +46,6 @@ class ChatProvider with ChangeNotifier {
 
   createChatRoom(String uid1, String uid2, String url1, String url2,
       String name1, String name2) async {
-
     final snapShot = await FirebaseFirestore.instance
         .collection("chatRooms")
         .doc(getChatRoomIdByUsernames(uid1, uid2))
@@ -86,6 +87,24 @@ class ChatProvider with ChangeNotifier {
                 notifyListeners(),
               });
     }
+  }
+
+  Future deleteMassage(String chat_id) async {
+    var collection = FirebaseFirestore.instance
+        .collection('chatRooms')
+        .doc(chat_id)
+        .collection("chats");
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+
+    await FirebaseFirestore.instance
+        .collection("chatRooms")
+        .doc(chat_id)
+        .delete();
+
+    notifyListeners();
   }
 
   Future addMessage({
