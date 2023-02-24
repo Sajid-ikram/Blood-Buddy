@@ -41,7 +41,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         items: [
           Icon(Icons.home, size: 30.sp, color: Colors.white),
           Icon(FontAwesomeIcons.solidHeart, size: 25.sp, color: Colors.white),
-          Icon(Icons.message, size: 25.sp, color: Colors.white),
+          Icon(Icons.messenger, size: 25.sp, color: Colors.white),
           Icon(Icons.person_rounded, size: 30.sp, color: Colors.white),
         ],
         onTap: (index) {

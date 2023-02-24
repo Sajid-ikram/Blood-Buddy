@@ -57,9 +57,8 @@ Drawer customDrawer(BuildContext context) {
         ),
         SizedBox(height: 40.h),
         listTile(context, "Profile"),
-        listTile(context, "Coming"),
-        listTile(context, "Coming"),
-        listTile(context, "Coming"),
+
+
         InkWell(
           onTap: (){
             Navigator.of(context).pushNamed("AboutUs");
@@ -67,6 +66,13 @@ Drawer customDrawer(BuildContext context) {
           child: listTile(context, "About Us"),
         ),
         listTile(context, "Contact Us"),
+        InkWell(
+          onTap: (){
+            Navigator.of(context).pushNamed("WhoMayDOnate");
+          },
+          child:  listTile(context, "Who may donate blood"),
+        ),
+
       ],
     ),
   );

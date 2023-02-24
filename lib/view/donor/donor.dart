@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_sms/flutter_sms.dart';
 import '../Chat/chat.dart';
 
 class Donor extends StatefulWidget {
@@ -20,6 +20,14 @@ class _DonorState extends State<Donor> {
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<DonorProvider>(context, listen: false);
+
+    void _sendSMS(String message, List<String> recipients) async {
+      String _result = await sendSMS(message: message, recipients: recipients)
+          .catchError((onError) {
+        print(onError);
+      });
+      print(_result);
+    }
 
     return Scaffold(
       appBar: customAppBar("Donors", context),
@@ -144,7 +152,7 @@ class _DonorState extends State<Donor> {
                                   children: [
                                     Container(
                                       constraints:
-                                          BoxConstraints(maxWidth: 140.w),
+                                          BoxConstraints(maxWidth: 90.w),
                                       child: Text(
                                         data?.docs[index - 1]["name"],
                                         overflow: TextOverflow.ellipsis,
@@ -172,7 +180,7 @@ class _DonorState extends State<Donor> {
 
 
                                       },
-                                      icon: Icon(Icons.mail_outline_rounded,
+                                      icon: Icon(Icons.messenger,
                                           size: 20.sp),
                                       padding: EdgeInsets.zero,
                                     ),
@@ -181,6 +189,17 @@ class _DonorState extends State<Donor> {
                                         launch("tel://$data['contact']");
                                       },
                                       child: Icon(Icons.phone, size: 18.sp,color: Colors.green,),
+
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    InkWell(
+                                      onTap: () {
+                                        String message = "Hello, I need ${data?.docs[index - 1]["bloodGroup"]} blood. My location is ...";
+                                        List<String> recipients = [ data?.docs[index - 1]["number"]];
+
+                                        _sendSMS(message, recipients);
+                                      },
+                                      child: Icon(Icons.messenger_sharp, size: 18.sp,color: Colors.blueAccent,),
 
                                     )
                                   ],

@@ -5,6 +5,7 @@ import 'package:blood_buddy/providers/post_provider.dart';
 import 'package:blood_buddy/providers/profile_provider.dart';
 import 'package:blood_buddy/view/Home/add_post.dart';
 import 'package:blood_buddy/view/drawer/about_us.dart';
+import 'package:blood_buddy/view/drawer/who_may_donate.dart';
 import 'package:blood_buddy/view/navigation_bar.dart';
 import 'package:blood_buddy/view/profile/edit_profile.dart';
 import 'package:blood_buddy/view/profile/map.dart';
@@ -85,6 +86,7 @@ class MyApp extends StatelessWidget {
             "ForgotPass": (ctx) => const ForgotPass(),
             "MyMap": (ctx) => const MyMap(),
             "AboutUs": (ctx) => const AboutUs(),
+            "WhoMayDOnate": (ctx) => const WhoMayDOnate(),
           },
         ),
       ),

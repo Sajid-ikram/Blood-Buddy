@@ -39,7 +39,6 @@ class _ChatUserState extends State<ChatUser> {
                           .collection("chatRooms")
                           .snapshots(),
                       builder: (context, snapshot) {
-                        print("===============================================1");
 
                         if (snapshot.hasError) {
                           return const Center(child: Text("Something went wrong"));

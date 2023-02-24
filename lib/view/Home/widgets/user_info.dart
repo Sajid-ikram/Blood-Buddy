@@ -82,7 +82,7 @@ class _UserProfileInfoState extends State<UserProfileInfo> {
                               );
                             });
                           },
-                          child: Icon(Icons.mail_outline_rounded, size: 18.sp),
+                          child: Icon(Icons.messenger, size: 18.sp),
                         ),
                         IconButton(
                           onPressed: () {

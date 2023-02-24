@@ -58,9 +58,13 @@ class _IndividualChatInfoState extends State<IndividualChatInfo> {
               );
             },
             child: Container(
-              color: Colors.grey.withOpacity(0.3),
+
               padding: EdgeInsets.all(10.sp),
               margin: EdgeInsets.only(bottom: 5.h),
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(10.sp)
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -74,6 +78,7 @@ class _IndividualChatInfoState extends State<IndividualChatInfo> {
                       buildLastText(),
                     ],
                   ),
+
                   const Spacer(),
                 ],
               ),

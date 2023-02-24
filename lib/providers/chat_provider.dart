@@ -94,6 +94,7 @@ class ChatProvider with ChangeNotifier {
         .collection('chatRooms')
         .doc(chat_id)
         .collection("chats");
+
     var snapshots = await collection.get();
     for (var doc in snapshots.docs) {
       await doc.reference.delete();
