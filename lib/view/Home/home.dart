@@ -87,7 +87,6 @@ class _HomeState extends State<Home> {
         ],
       ),
       drawer: customDrawer(context),
-
       body: Stack(
         children: [
           Align(
@@ -157,7 +156,9 @@ class _HomeState extends State<Home> {
                                   const Spacer(),
                                   if (pro.uid ==
                                           data?.docs[index - 1]["ownerUid"] ||
-                                      pro.role == "admin")
+                                      pro.role == "admin" ||
+                                      pro.email ==
+                                          "cse_1912020176@lus.ac.bd")
                                     IconButton(
                                       onPressed: () {
                                         provider.deletePost(
@@ -241,7 +242,6 @@ class _HomeState extends State<Home> {
                       text1 == "Contact : " ? TextDecoration.underline : null,
                 ),
               ),
-
             ],
           ),
         )

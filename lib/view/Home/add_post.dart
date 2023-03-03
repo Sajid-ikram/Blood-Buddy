@@ -47,12 +47,45 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
             contact: contactController.text,
             dateTime: DateTime.now().toString(),
             context: context);
-        Navigator.of(context, rootNavigator: true).pop();
-        Navigator.pop(context);
+        return sendEmail(pro2.dropdownValue,
+            "Need ${pro2.dropdownValue} blood at ${placeController.text}");
       }
     } catch (e) {
       Navigator.of(context, rootNavigator: true).pop();
     }
+  }
+
+  Future sendEmail(String bloodGroup, String body) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Send email?'),
+          content: Text(
+              "Do you want to send emails to $bloodGroup blood group holder?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+                Navigator.of(context, rootNavigator: true).pop();
+                Navigator.pop(context);
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await Provider.of<PostProvider>(context, listen: false)
+                    .sendEmail(bloodGroup, body);
+                Navigator.pop(context, true);
+                Navigator.of(context, rootNavigator: true).pop();
+                Navigator.pop(context);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+      context: context,
+    );
   }
 
   TextEditingController bloodAmountController = TextEditingController();
